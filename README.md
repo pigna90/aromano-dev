@@ -67,8 +67,9 @@ git add .
 git commit -m "Your update message"
 git push origin main
 ```
-3. Deploy:
+3. Build and Deploy:
 ```bash
+npm run build
 npm run deploy
 ```
 
