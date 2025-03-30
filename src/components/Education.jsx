@@ -31,6 +31,7 @@ const EducationItem = styled(motion.div)`
     @media (max-width: 768px) {
       flex-direction: column;
       gap: 0.5rem;
+      margin-bottom: 0.8rem;
     }
   }
 
@@ -38,6 +39,10 @@ const EducationItem = styled(motion.div)`
     color: #2c3e50;
     font-size: 1.1rem;
     font-weight: 600;
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
   }
 
   .date {
@@ -47,6 +52,11 @@ const EducationItem = styled(motion.div)`
     background: rgba(52, 152, 219, 0.1);
     border-radius: 15px;
     font-size: 0.9rem;
+
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+      padding: 0.15rem 0.6rem;
+    }
   }
 
   .university {
@@ -61,12 +71,22 @@ const EducationItem = styled(motion.div)`
       content: '🎓';
       font-size: 1rem;
     }
+
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
   }
 
   .details {
     color: #666;
     font-size: 0.9rem;
     line-height: 1.5;
+
+    @media (max-width: 768px) {
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
 
     .thesis {
       color: #3498db;
@@ -78,6 +98,12 @@ const EducationItem = styled(motion.div)`
       display: flex;
       align-items: flex-start;
       gap: 0.5rem;
+
+      @media (max-width: 768px) {
+        font-size: 0.85rem;
+        padding: 0.4rem;
+        margin-top: 0.4rem;
+      }
 
       &::before {
         content: '📝';
@@ -91,12 +117,22 @@ const EducationItem = styled(motion.div)`
       flex-wrap: wrap;
       gap: 0.5rem;
 
+      @media (max-width: 768px) {
+        gap: 0.4rem;
+        margin-top: 0.4rem;
+      }
+
       .course {
         background: rgba(44, 62, 80, 0.05);
         padding: 0.2rem 0.6rem;
         border-radius: 12px;
         font-size: 0.85rem;
         color: #2c3e50;
+
+        @media (max-width: 768px) {
+          font-size: 0.8rem;
+          padding: 0.15rem 0.5rem;
+        }
       }
     }
   }

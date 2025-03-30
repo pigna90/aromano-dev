@@ -7,6 +7,10 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   base: '/',
+  server: {
+    host: true, // Listen on all addresses
+    port: 5173  // Default Vite port
+  },
   build: {
     hooks: {
       'closeBundle': () => {

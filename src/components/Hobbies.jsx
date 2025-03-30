@@ -16,16 +16,31 @@ const HobbiesGrid = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 3rem;
-  margin-top: 1.5rem;
-  max-width: 800px;
+  gap: 2rem;
+  margin-top: 1rem;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+
+  @media (max-width: 768px) {
+    gap: 0.8rem;
+    padding: 0 0.8rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    justify-items: center;
+
+    /* Center the last element if it's alone */
+    > *:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      justify-self: center;
+    }
+  }
 `;
 
 const HobbyCard = styled(motion.div)`
   background: white;
-  padding: 1.5rem;
+  padding: 1.2rem;
   border-radius: 50%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -34,8 +49,8 @@ const HobbyCard = styled(motion.div)`
   justify-content: center;
   text-align: center;
   transition: all 0.3s ease;
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 160px;
   aspect-ratio: 1;
 
   &:hover {
@@ -44,15 +59,30 @@ const HobbyCard = styled(motion.div)`
   }
 
   .icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #3498db;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
 
   h3 {
     color: #2c3e50;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    width: 120px;
+    height: 120px;
+    padding: 0.8rem;
+
+    .icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.2rem;
+    }
+
+    h3 {
+      font-size: 0.85rem;
+    }
   }
 `;
 

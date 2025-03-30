@@ -32,6 +32,7 @@ const ExperienceItem = styled(motion.div)`
     @media (max-width: 768px) {
       flex-direction: column;
       gap: 0.5rem;
+      margin-bottom: 0.8rem;
     }
   }
 
@@ -39,6 +40,10 @@ const ExperienceItem = styled(motion.div)`
     color: #2c3e50;
     font-size: 1.1rem;
     font-weight: 600;
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
   }
 
   .date {
@@ -48,6 +53,11 @@ const ExperienceItem = styled(motion.div)`
     background: rgba(52, 152, 219, 0.1);
     border-radius: 15px;
     font-size: 0.9rem;
+
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+      padding: 0.15rem 0.6rem;
+    }
   }
 
   .company {
@@ -62,12 +72,21 @@ const ExperienceItem = styled(motion.div)`
       content: '🏢';
       font-size: 1rem;
     }
+
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
   }
 
   .responsibilities {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+
+    @media (max-width: 768px) {
+      gap: 0.4rem;
+    }
 
     .responsibility {
       background: rgba(44, 62, 80, 0.05);
@@ -79,6 +98,11 @@ const ExperienceItem = styled(motion.div)`
       align-items: flex-start;
       gap: 0.5rem;
       transition: all 0.2s ease;
+
+      @media (max-width: 768px) {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.6rem;
+      }
 
       &:hover {
         background: rgba(44, 62, 80, 0.08);

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin, faMedium } from '@fortawesome/free-brands-svg-icons';
+import { useState } from 'react';
 
 const HeroSection = styled.header`
   height: 100vh;
@@ -73,12 +74,14 @@ const ProfileImage = styled(motion.div)`
     transition: opacity 0.3s ease;
   }
 
-  &:hover {
-    img:first-child {
-      opacity: 0;
-    }
-    .hover-image {
-      opacity: 1;
+  @media (min-width: 769px) {
+    &:hover {
+      img:first-child {
+        opacity: 0;
+      }
+      .hover-image {
+        opacity: 1;
+      }
     }
   }
 `;
@@ -112,6 +115,12 @@ const MentorIcon = styled.span`
 `;
 
 const Hero = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleTap = () => {
+    setIsHovered(!isHovered);
+  };
+
   return (
     <HeroSection>
       <HeroContent>
@@ -119,12 +128,18 @@ const Hero = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          onClick={handleTap}
         >
-          <img src="/images/profile/headshot.jpg" alt="Profile" />
+          <img 
+            src="/images/profile/headshot.jpg" 
+            alt="Profile" 
+            style={{ opacity: isHovered ? 0 : 1 }}
+          />
           <img 
             className="hover-image"
             src="/images/profile/headshot_hover.png" 
             alt="Profile Hover" 
+            style={{ opacity: isHovered ? 1 : 0 }}
           />
         </ProfileImage>
         <motion.h1

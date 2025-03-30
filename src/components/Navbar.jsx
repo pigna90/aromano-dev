@@ -1,5 +1,8 @@
 import { Link } from 'react-scroll';
 import styled from 'styled-components';
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const Nav = styled.nav`
   position: fixed;
@@ -8,7 +11,7 @@ const Nav = styled.nav`
   background-color: rgba(255, 255, 255, 0.95);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  padding: 1rem;
+  padding: 0.8rem 1rem;
 `;
 
 const NavContent = styled.div`
@@ -17,22 +20,17 @@ const NavContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 1rem;
-  }
 `;
 
 const Logo = styled.div`
   font-size: 1.3rem;
   white-space: nowrap;
-
-  @media (max-width: 768px) {
-    font-size: 1.2rem;
-  }
   font-weight: bold;
   color: #2c3e50;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const NavLinks = styled.ul`
@@ -41,9 +39,16 @@ const NavLinks = styled.ul`
   gap: 2rem;
 
   @media (max-width: 768px) {
+    display: ${props => props.$isOpen ? 'flex' : 'none'};
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.98);
     flex-direction: column;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     gap: 1rem;
-    text-align: center;
   }
 `;
 
@@ -61,14 +66,54 @@ const NavLink = styled(Link)`
   &.active {
     color: #3498db;
   }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    padding: 0.5rem;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+`;
+
+const MenuButton = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #3498db;
+  }
+
+  @media (max-width: 768px) {
+    display: block;
+  }
 `;
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
   return (
     <Nav>
       <NavContent>
         <Logo>Alessandro Romano</Logo>
-        <NavLinks>
+        <MenuButton onClick={toggleMenu}>
+          <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
+        </MenuButton>
+        <NavLinks $isOpen={isOpen}>
           <li>
             <NavLink
               to="about"
@@ -77,6 +122,7 @@ const Navbar = () => {
               offset={-70}
               duration={500}
               activeClass="active"
+              onClick={closeMenu}
             >
               About
             </NavLink>
@@ -89,6 +135,7 @@ const Navbar = () => {
               offset={-70}
               duration={500}
               activeClass="active"
+              onClick={closeMenu}
             >
               Education
             </NavLink>
@@ -101,6 +148,7 @@ const Navbar = () => {
               offset={-70}
               duration={500}
               activeClass="active"
+              onClick={closeMenu}
             >
               Experience
             </NavLink>
@@ -113,6 +161,7 @@ const Navbar = () => {
               offset={-70}
               duration={500}
               activeClass="active"
+              onClick={closeMenu}
             >
               Conferences
             </NavLink>
@@ -125,6 +174,7 @@ const Navbar = () => {
               offset={-70}
               duration={500}
               activeClass="active"
+              onClick={closeMenu}
             >
               Hobbies
             </NavLink>
