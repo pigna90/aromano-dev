@@ -1,4 +1,4 @@
-import{j as e,d as r,m as n}from"./index-IPqkbR--.js";import{S as o,a as d,T as m}from"./SharedStyles-CraFrJyh.js";const c=r.div`
+import{j as e,d as r,m as n}from"./index-C4-EoLw1.js";import{S as o,a as d,T as m}from"./SharedStyles-ihG4KBdV.js";const c=r.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem 0;

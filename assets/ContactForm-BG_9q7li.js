@@ -1,4 +1,4 @@
-import{r as n,j as e,d as r}from"./index-IPqkbR--.js";const w=r.section`
+import{r as n,j as e,d as r}from"./index-C4-EoLw1.js";const w=r.section`
   padding: 5rem 0;
   background-color: #f5f6fa;
 `,y=r.div`

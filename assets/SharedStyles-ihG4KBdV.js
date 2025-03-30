@@ -1,4 +1,4 @@
-import{d as t}from"./index-IPqkbR--.js";const e=t.section`
+import{d as t}from"./index-C4-EoLw1.js";const e=t.section`
   width: 100%;
   padding: 5rem 2rem;
   background-color: white;

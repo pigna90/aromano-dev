@@ -1,4 +1,4 @@
-import{j as e,s as n,F as t,d as o}from"./index-IPqkbR--.js";const a=o.footer`
+import{j as e,s as n,F as t,d as o}from"./index-C4-EoLw1.js";const a=o.footer`
   background: #2d3436;
   color: white;
   padding: 2rem 0;
