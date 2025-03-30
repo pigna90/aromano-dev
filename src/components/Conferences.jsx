@@ -8,29 +8,97 @@ const TabContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  margin: 2rem 0;
   background: rgba(52, 152, 219, 0.1);
   padding: 0.5rem;
   border-radius: 12px;
   width: fit-content;
-  margin: 2rem auto;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  @media (max-width: 768px) {
+    position: relative;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: 300px;
+  }
 `;
 
 const TabButton = styled.button`
-  background: ${props => props.active ? '#fff' : 'transparent'};
-  color: ${props => props.active ? '#2c3e50' : '#7f8c8d'};
+  background: ${props => props.$active ? '#fff' : 'transparent'};
+  color: ${props => props.$active ? '#2c3e50' : '#7f8c8d'};
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-weight: ${props => props.active ? '600' : '500'};
-  box-shadow: ${props => props.active ? '0 2px 8px rgba(0, 0, 0, 0.1)' : 'none'};
+  font-weight: ${props => props.$active ? '600' : '500'};
+  box-shadow: ${props => props.$active ? '0 2px 8px rgba(0, 0, 0, 0.1)' : 'none'};
 
   &:hover {
-    color: ${props => props.active ? '#2c3e50' : '#3498db'};
-    background: ${props => props.active ? '#fff' : 'rgba(255, 255, 255, 0.5)'};
+    color: ${props => props.$active ? '#2c3e50' : '#3498db'};
+    background: ${props => props.$active ? '#fff' : 'rgba(255, 255, 255, 0.5)'};
+  }
+`;
+
+const ControlsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  position: relative;
+  padding: 0 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+`;
+
+const ToggleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+`;
+
+const ToggleLabel = styled.span`
+  font-size: 0.9rem;
+  color: #7f8c8d;
+`;
+
+const ToggleSwitch = styled.div`
+  position: relative;
+  width: 36px;
+  height: 18px;
+  background: ${props => props.$active ? '#3498db' : '#bdc3c7'};
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: white;
+    border-radius: 50%;
+    top: 2px;
+    left: ${props => props.$active ? '20px' : '2px'};
+    transition: all 0.2s ease;
   }
 `;
 
@@ -50,6 +118,7 @@ const ConferenceItem = styled(motion.div)`
   display: grid;
   grid-template-columns: 140px 1fr;
   transition: all 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     transform: translateY(-2px);
@@ -62,7 +131,7 @@ const ConferenceItem = styled(motion.div)`
 `;
 
 const DateSection = styled.div`
-  background: ${props => props.type === 'upcoming' ? 'rgba(52, 152, 219, 0.1)' : 'rgba(44, 62, 80, 0.1)'};
+  background: ${props => props.$type === 'upcoming' ? 'rgba(52, 152, 219, 0.1)' : 'rgba(44, 62, 80, 0.1)'};
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -71,7 +140,7 @@ const DateSection = styled.div`
   border-right: 1px solid #e0e0e0;
 
   .month {
-    color: ${props => props.type === 'upcoming' ? '#3498db' : '#2c3e50'};
+    color: ${props => props.$type === 'upcoming' ? '#3498db' : '#2c3e50'};
     font-weight: 600;
     font-size: 1rem;
     line-height: 1;
@@ -87,7 +156,7 @@ const DateSection = styled.div`
 
   .status {
     font-size: 0.75rem;
-    color: ${props => props.type === 'upcoming' ? '#3498db' : '#7f8c8d'};
+    color: ${props => props.$type === 'upcoming' ? '#3498db' : '#7f8c8d'};
     padding: 0.15rem 0.6rem;
     background: white;
     border-radius: 12px;
@@ -108,14 +177,57 @@ const DateSection = styled.div`
   }
 `;
 
+const VideoIcon = styled.a`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #3498db;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(52, 152, 219, 0.1);
+  padding: 0.7rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  z-index: 2;
+
+  &:hover {
+    transform: scale(1.1);
+    background: rgba(52, 152, 219, 0.2);
+  }
+
+  &::before {
+    content: "▶";
+    font-size: 1rem;
+  }
+`;
+
 const ContentSection = styled.div`
   padding: 1rem;
+  position: relative;
 
   h3 {
     color: #2c3e50;
     margin-bottom: 0.25rem;
     font-size: 1rem;
     font-weight: 600;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      font-weight: 600;
+
+      &:hover {
+        color: #3498db;
+      }
+    }
   }
 
   .topic {
@@ -259,12 +371,6 @@ const YearTitle = styled.h3`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  .count {
-    font-size: 0.9rem;
-    color: #7f8c8d;
-    font-weight: normal;
-  }
 `;
 
 const ShowMoreButton = styled.button`
@@ -281,31 +387,91 @@ const ShowMoreButton = styled.button`
   }
 `;
 
+const SectionHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+`;
+
+const VideoFilterButton = styled.button`
+  background: ${props => props.active ? 'rgba(52, 152, 219, 0.2)' : 'transparent'};
+  border: none;
+  color: ${props => props.active ? '#3498db' : '#7f8c8d'};
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  position: relative;
+
+  &:hover {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+  }
+
+  &::before {
+    content: "🎥";
+    font-size: 1.2rem;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: #3498db;
+    border-radius: 50%;
+    opacity: ${props => props.active ? 1 : 0};
+    transition: opacity 0.2s ease;
+  }
+`;
+
 const Conferences = () => {
   const [activeTab, setActiveTab] = useState('upcoming');
+  const [showVideosOnly, setShowVideosOnly] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [expandedYears, setExpandedYears] = useState({});
   const slideInterval = 5000;
 
   // Get conferences data
-  const upcomingConferences = getUpcomingConferences().map(conf => ({
-    ...conf,
-    month: new Date(conf.date).toLocaleString('en-US', { month: 'long' }),
-    day: new Date(conf.date).getDate().toString(),
-    type: 'upcoming'
-  }));
+  const upcomingConferences = getUpcomingConferences()
+    .filter(conf => !showVideosOnly || conf.video_link)
+    .map(conf => ({
+      ...conf,
+      month: new Date(conf.date).toLocaleString('en-US', { month: 'long' }),
+      day: new Date(conf.date).getDate().toString(),
+      type: 'upcoming'
+    }));
   const pastConferences = getPastConferencesByYear();
+
+  // Filter past conferences by video if needed
+  if (showVideosOnly) {
+    Object.keys(pastConferences).forEach(year => {
+      pastConferences[year] = pastConferences[year].filter(conf => conf.video_link);
+    });
+  }
 
   // Get all conference images for the gallery
   const galleryImages = [
-    ...upcomingConferences.map(conf => ({
-      src: conf.image,
-      alt: `Speaking at ${conf.title}`,
-      title: conf.title,
-      description: conf.description
-    })),
+    ...upcomingConferences
+      .filter(conf => conf.image)
+      .map(conf => ({
+        src: conf.image,
+        alt: `Speaking at ${conf.title}`,
+        title: conf.title,
+        description: conf.description
+      })),
     ...Object.values(pastConferences)
       .flat()
+      .filter(conf => conf.image)
       .slice(0, 3)
       .map(conf => ({
         src: conf.image,
@@ -314,6 +480,9 @@ const Conferences = () => {
         description: conf.description
       }))
   ];
+
+  // Only show gallery if there are images
+  const hasGalleryImages = galleryImages.length > 0;
 
   const years = Object.keys(pastConferences).sort((a, b) => b - a);
 
@@ -350,8 +519,9 @@ const Conferences = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
+              onClick={() => conf.info_link && window.open(conf.info_link, '_blank', 'noopener,noreferrer')}
             >
-              <DateSection type={conf.type}>
+              <DateSection $type={conf.type}>
                 <span className="month">{conf.month}</span>
                 <span className="day">{conf.day}</span>
                 <span className="status">{conf.type}</span>
@@ -360,6 +530,18 @@ const Conferences = () => {
                 <h3>{conf.title}</h3>
                 <div className="topic">{conf.topic}</div>
                 <p>{conf.description}</p>
+                {conf.video_link && (
+                  <VideoIcon
+                    href={conf.video_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(conf.video_link, '_blank', 'width=800,height=600');
+                    }}
+                    title="Watch video"
+                  />
+                )}
               </ContentSection>
             </ConferenceItem>
           ))}
@@ -372,7 +554,7 @@ const Conferences = () => {
         {years.map(year => (
           <YearSection key={year}>
             <YearTitle>
-              <span>{year} <span className="count">({pastConferences[year].length} conferences)</span></span>
+              <span>{year}</span>
               <ShowMoreButton onClick={() => toggleYear(year)}>
                 {expandedYears[year] ? 'Show Less' : 'Show All'}
               </ShowMoreButton>
@@ -387,16 +569,29 @@ const Conferences = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}
+                    onClick={() => conf.info_link && window.open(conf.info_link, '_blank', 'noopener,noreferrer')}
                   >
-                    <DateSection type={conf.type}>
+                    <DateSection $type="past">
                       <span className="month">{conf.month}</span>
-                      <span className="day">{conf.day}</span>
-                      <span className="status">{conf.type}</span>
+                      <span className="day">{new Date(conf.date).getDate().toString()}</span>
+                      <span className="status">past</span>
                     </DateSection>
                     <ContentSection>
                       <h3>{conf.title}</h3>
                       <div className="topic">{conf.topic}</div>
                       <p>{conf.description}</p>
+                      {conf.video_link && (
+                        <VideoIcon
+                          href={conf.video_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.open(conf.video_link, '_blank', 'width=800,height=600');
+                          }}
+                          title="Watch video"
+                        />
+                      )}
                     </ContentSection>
                   </ConferenceItem>
                 ))}
@@ -410,66 +605,79 @@ const Conferences = () => {
   return (
     <Section id="conferences">
       <SectionContent>
-        <Title>Conferences & Speaking</Title>
+        <Title>Conferences</Title>
         
-        <GallerySection>
-          <SlideShow>
-            <AnimatePresence mode="wait">
-              <Slide
-                key={currentSlide}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <img 
-                  src={galleryImages[currentSlide].src} 
-                  alt={galleryImages[currentSlide].alt} 
-                />
-                <SlideInfo
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 }}
+        {hasGalleryImages && (
+          <GallerySection>
+            <SlideShow>
+              <AnimatePresence mode="wait">
+                <Slide
+                  key={currentSlide}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
                 >
-                  <h4>{galleryImages[currentSlide].title}</h4>
-                  <p>{galleryImages[currentSlide].description}</p>
-                </SlideInfo>
-              </Slide>
-            </AnimatePresence>
-            
-            <NavigationButton className="prev" onClick={prevSlide}>
-              ‹
-            </NavigationButton>
-            <NavigationButton className="next" onClick={nextSlide}>
-              ›
-            </NavigationButton>
+                  <img 
+                    src={galleryImages[currentSlide].src} 
+                    alt={galleryImages[currentSlide].alt} 
+                  />
+                  <SlideInfo
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <h4>{galleryImages[currentSlide].title}</h4>
+                    <p>{galleryImages[currentSlide].description}</p>
+                  </SlideInfo>
+                </Slide>
+              </AnimatePresence>
+              
+              <NavigationButton className="prev" onClick={prevSlide}>
+                ‹
+              </NavigationButton>
+              <NavigationButton className="next" onClick={nextSlide}>
+                ›
+              </NavigationButton>
 
-            <Dots>
-              {galleryImages.map((_, index) => (
-                <Dot
-                  key={index}
-                  active={currentSlide === index}
-                  onClick={() => setCurrentSlide(index)}
-                />
-              ))}
-            </Dots>
-          </SlideShow>
-        </GallerySection>
+              <Dots>
+                {galleryImages.map((_, index) => (
+                  <Dot
+                    key={index}
+                    active={currentSlide === index}
+                    onClick={() => setCurrentSlide(index)}
+                  />
+                ))}
+              </Dots>
+            </SlideShow>
+          </GallerySection>
+        )}
 
-        <TabContainer>
-          <TabButton 
-            active={activeTab === 'upcoming'} 
-            onClick={() => setActiveTab('upcoming')}
-          >
-            Upcoming
-          </TabButton>
-          <TabButton
-            active={activeTab === 'past'}
-            onClick={() => setActiveTab('past')}
-          >
-            Past
-          </TabButton>
-        </TabContainer>
+        <ControlsContainer>
+          <TabContainer>
+            <TabButton 
+              $active={activeTab === 'upcoming'} 
+              onClick={() => setActiveTab('upcoming')}
+            >
+              Upcoming
+            </TabButton>
+            <TabButton
+              $active={activeTab === 'past'}
+              onClick={() => setActiveTab('past')}
+            >
+              Past
+            </TabButton>
+          </TabContainer>
+
+          <ToggleContainer>
+            <ToggleLabel>Videos Only</ToggleLabel>
+            <ToggleSwitch
+              $active={showVideosOnly}
+              onClick={() => setShowVideosOnly(!showVideosOnly)}
+              title={showVideosOnly ? "Show all conferences" : "Show only conferences with videos"}
+            />
+          </ToggleContainer>
+        </ControlsContainer>
 
         {renderConferences()}
       </SectionContent>

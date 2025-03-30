@@ -25,7 +25,12 @@ const NavContent = styled.div`
 `;
 
 const Logo = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
   font-weight: bold;
   color: #2c3e50;
 `;
@@ -62,7 +67,7 @@ const Navbar = () => {
   return (
     <Nav>
       <NavContent>
-        <Logo>Portfolio</Logo>
+        <Logo>Alessandro Romano</Logo>
         <NavLinks>
           <li>
             <NavLink
@@ -74,6 +79,18 @@ const Navbar = () => {
               activeClass="active"
             >
               About
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="education"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+              activeClass="active"
+            >
+              Education
             </NavLink>
           </li>
           <li>

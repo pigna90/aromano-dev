@@ -7,26 +7,36 @@ import {
   faGuitar, 
   faSwimmer, 
   faHome, 
-  faBreadSlice 
+  faPizzaSlice,
+  faSkiing,
+  faMicrophone
 } from '@fortawesome/free-solid-svg-icons';
 
 const HobbiesGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 1.5rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const HobbyCard = styled(motion.div)`
   background: white;
-  padding: 2rem;
-  border-radius: 12px;
+  padding: 1.5rem;
+  border-radius: 50%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   transition: all 0.3s ease;
+  width: 200px;
+  height: 200px;
+  aspect-ratio: 1;
 
   &:hover {
     transform: translateY(-5px);
@@ -34,49 +44,46 @@ const HobbyCard = styled(motion.div)`
   }
 
   .icon {
-    font-size: 2.5rem;
+    font-size: 3rem;
     color: #3498db;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   h3 {
     color: #2c3e50;
-    margin-bottom: 0.5rem;
-    font-size: 1.3rem;
-  }
-
-  p {
-    color: #666;
-    line-height: 1.6;
-    font-size: 0.95rem;
+    font-size: 1.2rem;
+    margin: 0;
   }
 `;
 
 const hobbiesData = [
   {
     icon: faSkating,
-    title: 'Skating',
-    description: 'Exploring urban landscapes on wheels, embracing the freedom of movement and the thrill of mastering new tricks.'
+    title: 'Skating'
   },
   {
     icon: faGuitar,
-    title: 'Music',
-    description: 'Creating and performing music, expressing creativity through different instruments and musical styles.'
+    title: 'Music'
   },
   {
     icon: faSwimmer,
-    title: 'Swimming',
-    description: 'Finding peace and fitness in the water, maintaining both physical and mental well-being through regular swimming.'
+    title: 'Swimming'
   },
   {
     icon: faHome,
-    title: 'Home Automation',
-    description: 'Building smart home solutions, integrating technology to create an efficient and comfortable living space.'
+    title: 'Home Automation'
   },
   {
-    icon: faBreadSlice,
-    title: 'Baking',
-    description: 'Crafting delicious homemade breads and pastries, experimenting with different recipes and techniques.'
+    icon: faPizzaSlice,
+    title: 'Baking'
+  },
+  {
+    icon: faSkiing,
+    title: 'Skiing'
+  },
+  {
+    icon: faMicrophone,
+    title: 'Podcast Host'
   }
 ];
 
@@ -95,7 +102,6 @@ const Hobbies = () => {
             >
               <FontAwesomeIcon icon={hobby.icon} className="icon" />
               <h3>{hobby.title}</h3>
-              <p>{hobby.description}</p>
             </HobbyCard>
           ))}
         </HobbiesGrid>

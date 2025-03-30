@@ -45,6 +45,44 @@ const HeroContent = styled.div`
   }
 `;
 
+const ProfileImage = styled(motion.div)`
+  margin-bottom: 2rem;
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease;
+  }
+
+  .hover-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    img:first-child {
+      opacity: 0;
+    }
+    .hover-image {
+      opacity: 1;
+    }
+  }
+`;
+
 const SocialLinks = styled(motion.div)`
   display: flex;
   justify-content: center;
@@ -77,10 +115,22 @@ const Hero = () => {
   return (
     <HeroSection>
       <HeroContent>
-        <motion.h1
+        <ProfileImage
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+        >
+          <img src="/personal-portfolio/images/profile/headshot.jpg" alt="Profile" />
+          <img 
+            className="hover-image"
+            src="/personal-portfolio/images/profile/headshot_hover.png" 
+            alt="Profile Hover" 
+          />
+        </ProfileImage>
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
         >
           Alessandro Romano
         </motion.h1>
@@ -89,15 +139,7 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Data Scientist
-        </motion.p>
-        <motion.p 
-          className="roles"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          Musician & Public Speaker
+          Data Scientist • Musician • Public Speaker
         </motion.p>
         <SocialLinks
           initial={{ opacity: 0, y: 20 }}
