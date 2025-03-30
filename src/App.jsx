@@ -8,6 +8,7 @@ import Experience from './components/Experience';
 import Conferences from './components/Conferences';
 import Hobbies from './components/Hobbies';
 import Education from './components/Education';
+import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Experience />
       <Education />
       <Hobbies />
+      <ContactForm />
       <Footer />
     </>
   );
