@@ -43,7 +43,7 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <img src="/personal-portfolio/images/profile/ski.jpg" alt="Profile" />
+            <img src="/images/profile/ski.jpg" alt="Profile" />
           </ProfileImage>
           <AboutText
             initial={{ opacity: 0, x: 50 }}

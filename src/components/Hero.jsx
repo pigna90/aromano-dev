@@ -120,10 +120,10 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <img src="/personal-portfolio/images/profile/headshot.jpg" alt="Profile" />
+          <img src="/images/profile/headshot.jpg" alt="Profile" />
           <img 
             className="hover-image"
-            src="/personal-portfolio/images/profile/headshot_hover.png" 
+            src="/images/profile/headshot_hover.png" 
             alt="Profile Hover" 
           />
         </ProfileImage>
