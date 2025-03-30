@@ -78,13 +78,14 @@ const NavLink = styled(Link)`
 
 const MenuButton = styled.button`
   display: none;
-  background: none;
+  background: transparent;
   border: none;
   color: #2c3e50;
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
   transition: color 0.3s ease;
+  outline: none;
 
   &:hover {
     color: #3498db;
