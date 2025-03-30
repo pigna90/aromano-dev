@@ -1,4 +1,4 @@
-# Personal Portfolio
+# Alessandro Romano's Personal Webpage
 
 A modern, responsive portfolio website built with React, showcasing professional experience, conference talks, and personal projects. The site features smooth animations, interactive components, and a clean, professional design.
 
@@ -13,8 +13,8 @@ A modern, responsive portfolio website built with React, showcasing professional
 
 ## 🛠 Tech Stack
 
-- React 19
-- Vite 6
+- React 18
+- Vite 5
 - Styled Components
 - Framer Motion
 - Font Awesome
@@ -42,43 +42,21 @@ npm run dev
 
 This project is configured for deployment on GitHub Pages.
 
-### Prerequisites
-
-1. Create a GitHub repository named `personal-portfolio`
-2. Configure Git (if not already done):
-```bash
-git config --global user.email "your.email@example.com"
-git config --global user.name "Your Name"
-```
-
 ### Deployment Steps
 
-1. Update the `homepage` in `package.json`:
-```json
-{
-  "homepage": "https://YOUR_USERNAME.github.io/personal-portfolio"
-}
-```
-
-2. Connect your local repository to GitHub:
+1. Connect your local repository to GitHub:
 ```bash
-git remote add origin https://github.com/YOUR_USERNAME/personal-portfolio.git
+git remote add origin https://github.com/alessandroromano/personal-portfolio.git
 git branch -M main
 git push -u origin main
 ```
 
-3. Deploy to GitHub Pages:
+2. Deploy to GitHub Pages:
 ```bash
 npm run deploy
 ```
 
-4. Configure GitHub Pages:
-   - Go to your repository settings
-   - Navigate to "Pages"
-   - Set source to "gh-pages" branch
-   - Save changes
-
-Your portfolio will be available at: `https://YOUR_USERNAME.github.io/personal-portfolio`
+Your portfolio will be available at: `https://alessandroromano.github.io/personal-portfolio`
 
 ### Updating the Site
 
@@ -145,13 +123,3 @@ Add new conferences in `src/data/conferences.js`:
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/YOUR_USERNAME/personal-portfolio/issues).
-
-## 📧 Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_twitter) - your.email@example.com
-
-Project Link: [https://github.com/YOUR_USERNAME/personal-portfolio](https://github.com/YOUR_USERNAME/personal-portfolio)
