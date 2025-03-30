@@ -105,7 +105,7 @@ const SocialLinks = styled(motion.div)`
 `;
 
 const MentorIcon = styled.span`
-  font-family: 'Segoe UI', sans-serif;
+  font-family: var(--font-primary);
   font-weight: bold;
   font-size: 1.8rem;
   display: inline-block;
