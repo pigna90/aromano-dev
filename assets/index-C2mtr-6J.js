@@ -801,12 +801,14 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     transition: opacity 0.3s ease;
   }
 
-  &:hover {
-    img:first-child {
-      opacity: 0;
-    }
-    .hover-image {
-      opacity: 1;
+  @media (min-width: 769px) {
+    &:hover {
+      img:first-child {
+        opacity: 0;
+      }
+      .hover-image {
+        opacity: 1;
+      }
     }
   }
 `,SO=ft(ve.div)`
@@ -833,7 +835,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   display: inline-block;
   line-height: 1;
   transform: translateY(-1px);
-`,TO=()=>L.jsx(yO,{children:L.jsxs(vO,{children:[L.jsxs(bO,{initial:{opacity:0,y:-20},animate:{opacity:1,y:0},transition:{duration:.8},children:[L.jsx("img",{src:"/images/profile/headshot.jpg",alt:"Profile"}),L.jsx("img",{className:"hover-image",src:"/images/profile/headshot_hover.png",alt:"Profile Hover"})]}),L.jsx(ve.h1,{initial:{opacity:0,y:-20},animate:{opacity:1,y:0},transition:{duration:.8,delay:.1},children:"Alessandro Romano"}),L.jsx(ve.p,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8,delay:.2},children:"Data Scientist • Musician • Public Speaker"}),L.jsxs(SO,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8,delay:.4},children:[L.jsx(ve.a,{href:"https://github.com/yourusername",target:"_blank",rel:"noopener noreferrer",whileHover:{scale:1.1},whileTap:{scale:.95},children:L.jsx(yn,{icon:Nb})}),L.jsx(ve.a,{href:"https://linkedin.com/in/yourusername",target:"_blank",rel:"noopener noreferrer",whileHover:{scale:1.1},whileTap:{scale:.95},children:L.jsx(yn,{icon:jb})}),L.jsx(ve.a,{href:"https://medium.com/@yourusername",target:"_blank",rel:"noopener noreferrer",whileHover:{scale:1.1},whileTap:{scale:.95},children:L.jsx(yn,{icon:Lb})}),L.jsx(ve.a,{href:"https://mentorcruise.com/mentor/yourusername/",target:"_blank",rel:"noopener noreferrer",whileHover:{scale:1.1},whileTap:{scale:.95},children:L.jsx(xO,{children:"M"})})]})]})}),Ps=ft.section`
+`,TO=()=>{const[n,a]=et.useState(!1),r=()=>{a(!n)};return L.jsx(yO,{children:L.jsxs(vO,{children:[L.jsxs(bO,{initial:{opacity:0,y:-20},animate:{opacity:1,y:0},transition:{duration:.8},onClick:r,children:[L.jsx("img",{src:"/images/profile/headshot.jpg",alt:"Profile",style:{opacity:n?0:1}}),L.jsx("img",{className:"hover-image",src:"/images/profile/headshot_hover.png",alt:"Profile Hover",style:{opacity:n?1:0}})]}),L.jsx(ve.h1,{initial:{opacity:0,y:-20},animate:{opacity:1,y:0},transition:{duration:.8,delay:.1},children:"Alessandro Romano"}),L.jsx(ve.p,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8,delay:.2},children:"Data Scientist • Musician • Public Speaker"}),L.jsxs(SO,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8,delay:.4},children:[L.jsx(ve.a,{href:"https://github.com/yourusername",target:"_blank",rel:"noopener noreferrer",whileHover:{scale:1.1},whileTap:{scale:.95},children:L.jsx(yn,{icon:Nb})}),L.jsx(ve.a,{href:"https://linkedin.com/in/yourusername",target:"_blank",rel:"noopener noreferrer",whileHover:{scale:1.1},whileTap:{scale:.95},children:L.jsx(yn,{icon:jb})}),L.jsx(ve.a,{href:"https://medium.com/@yourusername",target:"_blank",rel:"noopener noreferrer",whileHover:{scale:1.1},whileTap:{scale:.95},children:L.jsx(yn,{icon:Lb})}),L.jsx(ve.a,{href:"https://mentorcruise.com/mentor/yourusername/",target:"_blank",rel:"noopener noreferrer",whileHover:{scale:1.1},whileTap:{scale:.95},children:L.jsx(xO,{children:"M"})})]})]})})},Ps=ft.section`
   width: 100%;
   padding: 5rem 2rem;
   background-color: white;
@@ -1372,19 +1374,29 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 3rem;
-  margin-top: 1.5rem;
-  max-width: 800px;
+  gap: 2rem;
+  margin-top: 1rem;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
 
   @media (max-width: 768px) {
-    gap: 1rem;
-    padding: 0 1rem;
+    gap: 0.8rem;
+    padding: 0 0.8rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    justify-items: center;
+
+    /* Center the last element if it's alone */
+    > *:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      justify-self: center;
+    }
   }
 `,IO=ft(ve.div)`
   background: white;
-  padding: 1.5rem;
+  padding: 1.2rem;
   border-radius: 50%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -1393,8 +1405,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   justify-content: center;
   text-align: center;
   transition: all 0.3s ease;
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 160px;
   aspect-ratio: 1;
 
   &:hover {
@@ -1403,29 +1415,29 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   }
 
   .icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #3498db;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
 
   h3 {
     color: #2c3e50;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: 0;
   }
 
   @media (max-width: 768px) {
-    width: 140px;
-    height: 140px;
-    padding: 1rem;
+    width: 120px;
+    height: 120px;
+    padding: 0.8rem;
 
     .icon {
-      font-size: 2rem;
-      margin-bottom: 0.3rem;
+      font-size: 1.8rem;
+      margin-bottom: 0.2rem;
     }
 
     h3 {
-      font-size: 1rem;
+      font-size: 0.85rem;
     }
   }
 `,WO=[{icon:wA,title:"Skating"},{icon:CA,title:"Music"},{icon:zA,title:"Swimming"},{icon:DA,title:"Home Automation"},{icon:TA,title:"Baking"},{icon:OA,title:"Skiing"},{icon:AA,title:"Podcast Host"}],$O=()=>L.jsx(Ps,{id:"hobbies",children:L.jsxs(Hs,{children:[L.jsx(Ys,{children:"Hobbies & Interests"}),L.jsx(ZO,{children:WO.map((n,a)=>L.jsxs(IO,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.5,delay:a*.1},children:[L.jsx(yn,{icon:n.icon,className:"icon"}),L.jsx("h3",{children:n.title})]},a))})]})}),JO=ft.div`
