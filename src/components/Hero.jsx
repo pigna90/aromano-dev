@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin, faMedium, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { socialLinks } from '../data/socialLinks';
 import Image from './common/Image';
+import { useState, useEffect, useRef } from 'react';
 
 const HeroSection = styled.header`
   height: 100vh;
@@ -74,6 +75,14 @@ const ProfileImage = styled(motion.div)`
       }
     }
   }
+
+  @media (max-width: 768px) {
+    &.show-hover {
+      .hover-image {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const SocialLinks = styled(motion.div)`
@@ -105,13 +114,43 @@ const MentorIcon = styled.span`
 `;
 
 const Hero = () => {
+  const [showHover, setShowHover] = useState(false);
+  const profileImageRef = useRef(null);
+
+  const handleImageInteraction = () => {
+    if (window.innerWidth <= 768) {
+      setShowHover(!showHover);
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        profileImageRef.current && 
+        !profileImageRef.current.contains(event.target) && 
+        showHover && 
+        window.innerWidth <= 768
+      ) {
+        setShowHover(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showHover]);
+
   return (
     <HeroSection>
       <HeroContent>
         <ProfileImage
+          ref={profileImageRef}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          className={showHover ? 'show-hover' : ''}
+          onClick={handleImageInteraction}
         >
           <Image 
             src="/images/profile/headshot.jpg" 
