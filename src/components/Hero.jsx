@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin, faMedium, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { socialLinks } from '../data/socialLinks';
+import Image from './common/Image';
 
 const HeroSection = styled.header`
   height: 100vh;
@@ -53,17 +54,9 @@ const ProfileImage = styled(motion.div)`
   height: 250px;
   margin-left: auto;
   margin-right: auto;
+  border-radius: 50%;
+  overflow: hidden;
   
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid white;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    transition: opacity 0.3s ease;
-  }
-
   .hover-image {
     position: absolute;
     top: 0;
@@ -76,9 +69,6 @@ const ProfileImage = styled(motion.div)`
 
   @media (min-width: 769px) {
     &:hover {
-      img:first-child {
-        opacity: 0;
-      }
       .hover-image {
         opacity: 1;
       }
@@ -123,15 +113,18 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <img 
+          <Image 
             src="/images/profile/headshot.jpg" 
             alt="Profile" 
+            borderRadius="50%"
           />
-          <img 
-            className="hover-image"
-            src="/images/profile/headshot_hover.png" 
-            alt="Profile Hover" 
-          />
+          <div className="hover-image">
+            <Image 
+              src="/images/profile/headshot_hover.png" 
+              alt="Profile Hover" 
+              borderRadius="50%"
+            />
+          </div>
         </ProfileImage>
         <motion.h1
           initial={{ opacity: 0, y: -20 }}

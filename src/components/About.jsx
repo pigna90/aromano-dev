@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Section, SectionContent, Title } from '../styles/SharedStyles';
+import Image from './common/Image';
 
 const Content = styled.div`
   display: flex;
@@ -15,12 +16,10 @@ const Content = styled.div`
 `;
 
 const ProfileImage = styled(motion.div)`
-  img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
 `;
 
 const AboutText = styled(motion.div)`
@@ -43,7 +42,11 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <img src="/images/profile/ski.jpg" alt="Profile" />
+            <Image 
+              src="/images/profile/ski.jpg" 
+              alt="Profile" 
+              borderRadius="50%"
+            />
           </ProfileImage>
           <AboutText
             initial={{ opacity: 0, x: 50 }}
