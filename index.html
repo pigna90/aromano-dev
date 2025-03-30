@@ -10,6 +10,12 @@
     <title>Alessandro Romano</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Analytics -->
+    <script>
+      // Check if user has declined cookies
+      if (localStorage.getItem('cookieConsent') === 'declined') {
+        window['ga-disable-G-53PTGD76C5'] = true;
+      }
+    </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-53PTGD76C5"></script>
     <script>
       window.dataLayer = window.dataLayer || [];

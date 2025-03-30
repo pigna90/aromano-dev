@@ -5,7 +5,7 @@ import { socialLinks } from '../data/socialLinks';
 const FooterContainer = styled.footer`
   background: #2d3436;
   color: white;
-  padding: 2rem 0;
+  padding: 1rem 0;
   text-align: center;
 `;
 
@@ -19,7 +19,7 @@ const SocialLinks = styled.div`
   display: flex;
   justify-content: center;
   gap: 1.5rem;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
 
   a {
     color: white;
@@ -44,7 +44,14 @@ const MentorIcon = styled.span`
 `;
 
 const Copyright = styled.p`
-  margin-top: 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-bottom: 0.1rem;
+`;
+
+const License = styled.p`
+  margin-top: 0;
   font-size: 0.9rem;
   opacity: 0.8;
 `;
@@ -73,6 +80,9 @@ const Footer = () => {
         <Copyright>
           © {new Date().getFullYear()} Alessandro Romano. All rights reserved.
         </Copyright>
+        <License>
+          This project is licensed under the MIT License.
+        </License>
       </FooterContent>
     </FooterContainer>
   );

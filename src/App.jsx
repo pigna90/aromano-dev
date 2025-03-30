@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import GlobalStyles from './styles/GlobalStyles';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import CookieConsent from './components/CookieConsent';
 
 // Lazy load components that are not immediately visible
 const About = lazy(() => import('./components/About'));
@@ -55,6 +56,7 @@ function App() {
       <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
         <Footer />
       </Suspense>
+      <CookieConsent />
     </>
   );
 }
