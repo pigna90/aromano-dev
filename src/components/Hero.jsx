@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faLinkedin, faMedium } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faLinkedin, faMedium, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { socialLinks } from '../data/socialLinks';
 
 const HeroSection = styled.header`
   height: 100vh;
@@ -151,42 +152,22 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <motion.a
-            href="https://github.com/yourusername"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <FontAwesomeIcon icon={faGithub} />
-          </motion.a>
-          <motion.a
-            href="https://linkedin.com/in/yourusername"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <FontAwesomeIcon icon={faLinkedin} />
-          </motion.a>
-          <motion.a
-            href="https://medium.com/@yourusername"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <FontAwesomeIcon icon={faMedium} />
-          </motion.a>
-          <motion.a
-            href="https://mentorcruise.com/mentor/yourusername/"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <MentorIcon>M</MentorIcon>
-          </motion.a>
+          {socialLinks.map((link, index) => (
+            <motion.a
+              key={link.name}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {link.isMentorIcon ? (
+                <MentorIcon>M</MentorIcon>
+              ) : (
+                <FontAwesomeIcon icon={link.icon} />
+              )}
+            </motion.a>
+          ))}
         </SocialLinks>
       </HeroContent>
     </HeroSection>
