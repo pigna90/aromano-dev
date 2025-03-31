@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Section, SectionContent, Title } from '../styles/SharedStyles';
 import { getUpcomingConferences, getPastConferencesByYear } from '../data/conferences';
+import ConferenceGallery from './ConferenceGallery';
 
 const TabContainer = styled.div`
   display: flex;
@@ -712,6 +713,8 @@ const Conferences = () => {
     <Section id="conferences">
       <SectionContent>
         <Title>Conferences</Title>
+        
+        <ConferenceGallery />
         
         {hasGalleryImages && (
           <GallerySection>
