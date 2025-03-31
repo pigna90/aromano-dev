@@ -47,7 +47,7 @@ export const conferences = [
     date: 'January 15, 2024',
     description: 'Presented on orchestrating LLM AI agents with CrewAI at AI Heroes 2024 in Turin.',
     location: 'Turin',
-    video_link: 'https://youtu.be/Z6iYie_Ry8k?si=A4ChBoynxCnmVrXU',
+    video_link: 'https://youtu.be/I98l3wLJ5Oo?si=s4VrKDPQNayA_b_e',
     info_link: 'https://aiheroes.it'
   },
   {

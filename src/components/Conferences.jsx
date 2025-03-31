@@ -127,6 +127,7 @@ const ConferenceItem = styled(motion.div)`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    position: relative;
   }
 `;
 
@@ -164,16 +165,52 @@ const DateSection = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 0.75rem;
-    flex-direction: row;
-    gap: 0.75rem;
-    justify-content: flex-start;
-    border-bottom: 1px solid #e0e0e0;
-    
-    .month, .day {
-      font-size: 0.9rem;
-      margin: 0;
-    }
+    display: none;
+  }
+`;
+
+const MobileDateSection = styled.div`
+  display: none;
+  background: ${props => props.$type === 'upcoming' ? 'rgba(52, 152, 219, 0.1)' : 'rgba(44, 62, 80, 0.1)'};
+  padding: 0.75rem;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+  height: 48px;
+
+  .month {
+    color: ${props => props.$type === 'upcoming' ? '#3498db' : '#2c3e50'};
+    font-weight: 600;
+    font-size: 0.9rem;
+    line-height: 1;
+  }
+
+  .day {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #2c3e50;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .status {
+    font-size: 0.75rem;
+    color: ${props => props.$type === 'upcoming' ? '#3498db' : '#7f8c8d'};
+    padding: 0.15rem 0.6rem;
+    background: white;
+    border-radius: 12px;
+    font-weight: 500;
+  }
+
+  .date-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
   }
 `;
 
@@ -205,6 +242,37 @@ const VideoIcon = styled.a`
   &::before {
     content: "▶";
     font-size: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    position: static;
+    width: 28px;
+    height: 28px;
+    padding: 0.4rem;
+    background: transparent;
+    margin-left: 0.75rem;
+
+    &::before {
+      font-size: 1.8rem;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+      background: transparent;
+    }
+  }
+`;
+
+const DesktopVideoIcon = styled(VideoIcon)`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const MobileVideoIcon = styled(VideoIcon)`
+  display: none;
+  @media (max-width: 768px) {
+    display: flex;
   }
 `;
 
@@ -526,12 +594,31 @@ const Conferences = () => {
                 <span className="day">{conf.day}</span>
                 <span className="status">{conf.type}</span>
               </DateSection>
+              <MobileDateSection $type={conf.type}>
+                <div className="date-info">
+                  <span className="month">{conf.month}</span>
+                  <span className="day">{conf.day}</span>
+                  <span className="status">{conf.type}</span>
+                </div>
+                {conf.video_link && (
+                  <MobileVideoIcon
+                    href={conf.video_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(conf.video_link, '_blank', 'width=800,height=600');
+                    }}
+                    title="Watch video"
+                  />
+                )}
+              </MobileDateSection>
               <ContentSection>
                 <h3>{conf.title}</h3>
                 <div className="topic">{conf.topic}</div>
                 <p>{conf.description}</p>
                 {conf.video_link && (
-                  <VideoIcon
+                  <DesktopVideoIcon
                     href={conf.video_link}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -576,12 +663,31 @@ const Conferences = () => {
                       <span className="day">{new Date(conf.date).getDate().toString()}</span>
                       <span className="status">past</span>
                     </DateSection>
+                    <MobileDateSection $type="past">
+                      <div className="date-info">
+                        <span className="month">{conf.month}</span>
+                        <span className="day">{new Date(conf.date).getDate().toString()}</span>
+                        <span className="status">past</span>
+                      </div>
+                      {conf.video_link && (
+                        <MobileVideoIcon
+                          href={conf.video_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.open(conf.video_link, '_blank', 'width=800,height=600');
+                          }}
+                          title="Watch video"
+                        />
+                      )}
+                    </MobileDateSection>
                     <ContentSection>
                       <h3>{conf.title}</h3>
                       <div className="topic">{conf.topic}</div>
                       <p>{conf.description}</p>
                       {conf.video_link && (
-                        <VideoIcon
+                        <DesktopVideoIcon
                           href={conf.video_link}
                           target="_blank"
                           rel="noopener noreferrer"
