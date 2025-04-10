@@ -37,14 +37,14 @@ export const conferences = [
   {
     title: 'University of Zaragoza',
     topic: 'Generative image creation and graphic design',
-    date: '2025',
+    date: 'March 3, 2025',
     description: 'Presenting on generative image creation and graphic design at the University of Zaragoza.',
     location: 'Zaragoza',
   },
   {
     title: 'AI Heroes 2024',
     topic: 'Orchestrating LLM AI Agents with CrewAI',
-    date: 'January 15, 2024',
+    date: 'December 11, 2024',
     description: 'Presented on orchestrating LLM AI agents with CrewAI at AI Heroes 2024 in Turin.',
     location: 'Turin',
     video_link: 'https://youtu.be/I98l3wLJ5Oo?si=s4VrKDPQNayA_b_e',
@@ -53,7 +53,7 @@ export const conferences = [
   {
     title: 'DevFest Bari',
     topic: 'Prototyping your Data Web Application with Streamlit',
-    date: 'February 20, 2024',
+    date: 'October 26, 2024',
     description: 'Presented on prototyping data web applications with Streamlit at DevFest Bari.',
     location: 'Bari',
     info_link: 'https://bari.devfest.it'
@@ -61,7 +61,7 @@ export const conferences = [
   {
     title: 'ai:NOW',
     topic: 'Pandas, Polars, and DataFrames standardization',
-    date: 'March 10, 2024',
+    date: 'October 9, 2024',
     description: 'Presented on Pandas, Polars, and DataFrames standardization at ai:NOW in Munich.',
     location: 'Munich',
     info_link: 'https://cxoportals.com/event/ainow-conference-dach/'
@@ -69,7 +69,7 @@ export const conferences = [
   {
     title: 'ODSC Europe',
     topic: 'Orchestrating LLM AI Agents with CrewAI',
-    date: 'April 5, 2024',
+    date: 'September 5, 2024',
     description: 'Presented on orchestrating LLM AI agents with CrewAI at ODSC Europe in London.',
     location: 'London',
     info_link: 'https://odsc.com/europe/'
@@ -77,7 +77,7 @@ export const conferences = [
   {
     title: 'Data & AI Conference',
     topic: 'Building a High-Performing Data Team: Strategies for Success',
-    date: 'May 15, 2024',
+    date: 'September 19, 2024',
     description: 'Presented on building high-performing data teams at the Data & AI Conference in Athens.',
     location: 'Athens',
     info_link: 'https://dataconference.boussiasevents.gr'
@@ -85,7 +85,7 @@ export const conferences = [
   {
     title: 'PyCon Italia',
     topic: 'Pandas, Polars and the DataFrame Consortium',
-    date: 'June 1, 2024',
+    date: 'May 23, 2024',
     description: 'Presented on Pandas, Polars and the DataFrame Consortium at PyCon Italia in Florence.',
     location: 'Florence',
     info_link: 'https://2024.pycon.it/en'
@@ -93,14 +93,15 @@ export const conferences = [
   {
     title: 'University of Salento',
     topic: 'From AI to AI',
-    date: 'July 10, 2024',
+    date: 'May 20, 2024',
     description: 'Presented on AI at the University of Salento in Lecce.',
     location: 'Lecce',
+    info_link: 'https://www.cultureforheritage.com/#/activities/colloquio-italo-spagnolo'
   },
   {
     title: 'Data Innovation Summit',
     topic: 'Pandas, Polars and the DataFrame Consortium',
-    date: 'August 20, 2024',
+    date: 'April 24, 2024',
     description: 'Presented on Pandas, Polars and the DataFrame Consortium at the Data Innovation Summit in Stockholm.',
     location: 'Stockholm',
     video_link: 'https://hyperight.com/pandas-polars-and-the-dataframe-consortium/',
@@ -109,7 +110,7 @@ export const conferences = [
   {
     title: 'Big Data Technology Warsaw Summit',
     topic: 'Digital Experimentation: The role of A/B Testing in the AI Landscape',
-    date: 'September 5, 2024',
+    date: 'April 9, 2024',
     description: 'Presented on digital experimentation and A/B testing in AI at the Big Data Technology Warsaw Summit.',
     location: 'Warsaw',
     info_link: 'https://bigdatatechwarsaw.eu'
@@ -117,7 +118,7 @@ export const conferences = [
   {
     title: 'Data Festival',
     topic: 'Pandas, Polars and the DataFrame Consortium',
-    date: 'October 15, 2024',
+    date: 'March 19, 2024',
     description: 'Presented on Pandas, Polars and the DataFrame Consortium at the Data Festival in Munich.',
     location: 'Munich',
     info_link: 'https://barc.com/de/events/data-festival/'
@@ -125,7 +126,7 @@ export const conferences = [
   {
     title: 'bit summit',
     topic: 'Digital Experimentation: From Classical Testing to Causal Inference',
-    date: 'January 20, 2023',
+    date: 'December 7, 2023',
     description: 'Presented on digital experimentation and causal inference at bit summit in Hamburg.',
     location: 'Hamburg',
     info_link: 'https://www.bit-summit.com'
@@ -133,7 +134,7 @@ export const conferences = [
   {
     title: 'KNIME',
     topic: 'AI Learnathon: Build a Chatbot without Coding',
-    date: 'February 10, 2023',
+    date: 'November 23, 2023',
     description: 'Presented on building chatbots without coding at KNIME in Hamburg.',
     location: 'Hamburg',
     video_link: 'https://www.youtube.com/watch?v=example2',
@@ -142,7 +143,7 @@ export const conferences = [
   {
     title: 'Python Pizza',
     topic: 'Streamlit: Making Data Shine in Minutes',
-    date: 'March 15, 2023',
+    date: 'November 17, 2023',
     description: 'Presented on Streamlit at Python Pizza in Hamburg.',
     location: 'Hamburg',
     video_link: 'https://www.youtube.com/watch?v=example3',
@@ -151,7 +152,7 @@ export const conferences = [
   {
     title: 'PyCon Ireland',
     topic: 'Is Polars the new Pandas? When and how to use it',
-    date: 'April 5, 2023',
+    date: 'November 11, 2023',
     description: 'Presented on Polars vs Pandas at PyCon Ireland in Dublin.',
     location: 'Dublin',
     info_link: 'https://python.ie/pycon-2023/'
@@ -159,7 +160,7 @@ export const conferences = [
   {
     title: 'ODSC West',
     topic: 'The Crucial Role of Digital Experimentation and A/B Testing in the AI Landscape',
-    date: 'May 20, 2023',
+    date: 'November 1, 2023',
     description: 'Presented on digital experimentation and A/B testing in AI at ODSC West.',
     location: 'Virtual',
     info_link: 'https://odsc.com/california/'
@@ -167,7 +168,7 @@ export const conferences = [
   {
     title: 'Apply Data Summit',
     topic: 'Digital Experimentation: From A/B Testing to Causal Inference',
-    date: 'June 10, 2023',
+    date: 'September 28, 2023',
     description: 'Presented on digital experimentation and causal inference at the Apply Data Summit in Berlin.',
     location: 'Berlin',
     video_link: 'https://www.youtube.com/watch?v=example4',
@@ -176,7 +177,7 @@ export const conferences = [
   {
     title: 'Big Data Technology Warsaw Summit',
     topic: 'Digital Experimentation roundtable facilitation',
-    date: 'July 15, 2023',
+    date: 'March 29, 2023',
     description: 'Facilitated a roundtable on digital experimentation at the Big Data Technology Warsaw Summit.',
     location: 'Warsaw',
     info_link: 'https://bigdatatechsummit.com'
@@ -184,7 +185,7 @@ export const conferences = [
   {
     title: 'Connected Enterprise Forum | StreamSets',
     topic: 'Building a High-Performing Data Team: Strategies for Success',
-    date: 'August 5, 2023',
+    date: 'March 9, 2023',
     description: 'Presented on building high-performing data teams at the Connected Enterprise Forum in Munich.',
     location: 'Munich',
     info_link: 'https://streamsets.com'
@@ -192,7 +193,7 @@ export const conferences = [
   {
     title: 'Connected Enterprise Forum | StreamSets',
     topic: 'Building a High-Performing Data Team: Strategies for Success',
-    date: 'September 10, 2023',
+    date: 'March 21, 2023',
     description: 'Presented on building high-performing data teams at the Connected Enterprise Forum in London.',
     location: 'London',
     info_link: 'https://streamsets.com'
@@ -200,7 +201,7 @@ export const conferences = [
   {
     title: 'DataMass',
     topic: 'Introduction to Causal Inference in the Ride-Hailing Business',
-    date: 'January 15, 2022',
+    date: 'September 30, 2022',
     description: 'Presented on causal inference in ride-hailing at DataMass in Gdansk.',
     location: 'Gdansk',
     info_link: 'https://summit.datamass.io'
@@ -208,7 +209,7 @@ export const conferences = [
   {
     title: 'Data Innovation Summit',
     topic: 'Introduction to Causal Inference in the Ride-Hailing Business',
-    date: 'February 20, 2022',
+    date: 'May 4, 2022',
     description: 'Presented on causal inference in ride-hailing at the Data Innovation Summit in Stockholm.',
     location: 'Stockholm',
     info_link: 'https://datainnovationsummit.com'
@@ -216,28 +217,28 @@ export const conferences = [
   {
     title: 'Python Pizza Hamburg',
     topic: 'How I made my Girlfriend happy with a Telegram Bot',
-    date: 'January 10, 2020',
+    date: 'December 31, 2020',
     description: 'Presented on building a Telegram bot at Python Pizza Hamburg.',
     location: 'Virtual'
   },
   {
     title: 'PyData Hamburg',
     topic: 'AWS CDK: provision your cloud application using Python',
-    date: 'February 15, 2020',
+    date: 'November 17, 2020',
     description: 'Presented on AWS CDK at PyData Hamburg.',
     location: 'Virtual'
   },
   {
     title: 'meetup.ai Hamburg',
     topic: 'Price prediction pipeline for incoming trucking tours',
-    date: 'March 20, 2019',
+    date: 'August 7, 2019',
     description: 'Presented on price prediction pipelines at meetup.ai Hamburg.',
     location: 'Hamburg'
   },
   {
     title: 'KNIME',
     topic: 'Data Science and Machine Learning Engineering Workshop',
-    date: 'April 10, 2018',
+    date: 'September 25, 2018',
     description: 'Hosted a workshop on data science and machine learning engineering at KNIME in Hamburg.',
     location: 'Hamburg'
   }
@@ -276,7 +277,7 @@ export const getPastConferences = () => {
  */
 export const getPastConferencesByYear = () => {
   const pastConfs = getPastConferences();
-  return pastConfs.reduce((acc, conf) => {
+  const groupedByYear = pastConfs.reduce((acc, conf) => {
     const year = new Date(conf.date).getFullYear();
     if (!acc[year]) {
       acc[year] = [];
@@ -293,4 +294,11 @@ export const getPastConferencesByYear = () => {
     });
     return acc;
   }, {});
+  
+  // Sort conferences within each year by date (most recent first)
+  Object.keys(groupedByYear).forEach(year => {
+    groupedByYear[year].sort((a, b) => new Date(b.date) - new Date(a.date));
+  });
+  
+  return groupedByYear;
 }; 
