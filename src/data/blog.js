@@ -31,8 +31,24 @@ export async function fetchBlogPosts() {
         .replace(/<[^>]*>/g, '') // Remove remaining HTML tags
         .replace(/\s+/g, ' ') // Replace multiple spaces with single space
         .replace(/Continue reading on.*$/, '') // Remove "Continue reading on" text
-        .trim()
-        .slice(0, 200) + '...';
+        .trim();
+
+      // Extract first two lines of the article
+      const firstTwoLines = cleanDescription.split('\n').slice(0, 2).join(' ').trim();
+
+      console.log('First two lines:', firstTwoLines);
+
+      // Extract the actual subtitle from the content
+      const subtitleMatch = item.content.match(/<p[^>]*>(.*?)<\/p>/);
+      const subtitle = subtitleMatch ? subtitleMatch[1].replace(/<[^>]*>/g, '').trim() : cleanDescription.split('.')[0].trim();
+
+      console.log('Article subtitle:', subtitle);
+
+      const fullDescription = cleanDescription.slice(0, 200) + '...';
+
+      console.log('Raw description:', item.description);
+      console.log('Cleaned description:', cleanDescription);
+      console.log('Extracted subtitle:', subtitle);
 
       // If still no image, try to extract from description
       if (!image && item.description.includes('<img')) {
@@ -55,7 +71,7 @@ export async function fetchBlogPosts() {
       console.log('Processed post:', {
         title: item.title,
         image: image,
-        description: cleanDescription.substring(0, 50) + '...'
+        description: fullDescription.substring(0, 50) + '...'
       });
 
       return {
@@ -65,7 +81,8 @@ export async function fetchBlogPosts() {
           month: 'long', 
           day: 'numeric' 
         }),
-        description: cleanDescription,
+        subtitle: subtitle,
+        description: firstTwoLines,
         link: item.link,
         image: image
       };

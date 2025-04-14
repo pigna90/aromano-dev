@@ -58,13 +58,18 @@ const BlogContent = styled.div`
   .date {
     color: #7f8c8d;
     font-size: 0.9rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
-  p {
+  .description {
     color: #666;
     font-size: 0.95rem;
-    line-height: 1.5;
+    line-height: 1.4;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 `;
 
@@ -145,7 +150,7 @@ const Blog = () => {
                   <BlogContent>
                     <h3>{post.title}</h3>
                     <div className="date">{post.date}</div>
-                    <p>{post.description}</p>
+                    <p className="description">{post.description}</p>
                   </BlogContent>
                 </BlogCard>
               ))}
