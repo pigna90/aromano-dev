@@ -4,6 +4,14 @@
  */
 export const conferences = [
   {
+    title: 'DATAHACK Summit',
+    topic: 'Agentic AI with CrewAI',
+    date: 'August 20, 2025',
+    description: 'Presenting and leading a workshopt about Agentic AI with CrewAI',
+    location: 'Bangaluru',
+    info_link: 'https://www.analyticsvidhya.com/datahacksummit/'
+  },
+  {
     title: 'KNIME Lernathon',
     topic: 'KNIME Learning Workshop',
     date: 'April 4, 2025',
@@ -259,7 +267,9 @@ export const addConference = (conference) => {
  */
 export const getUpcomingConferences = () => {
   const now = new Date();
-  return conferences.filter(conf => new Date(conf.date) > now);
+  return conferences
+    .filter(conf => new Date(conf.date) > now)
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
 };
 
 /**

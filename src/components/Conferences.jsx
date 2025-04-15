@@ -306,6 +306,26 @@ const ContentSection = styled.div`
     font-size: 0.9rem;
   }
 
+  .location {
+    color: #7f8c8d;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237f8c8d'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+
   p {
     color: #666;
     font-size: 0.85rem;
@@ -617,6 +637,7 @@ const Conferences = () => {
               <ContentSection>
                 <h3>{conf.title}</h3>
                 <div className="topic">{conf.topic}</div>
+                <div className="location">{conf.location}</div>
                 <p>{conf.description}</p>
                 {conf.video_link && (
                   <DesktopVideoIcon
@@ -686,6 +707,7 @@ const Conferences = () => {
                     <ContentSection>
                       <h3>{conf.title}</h3>
                       <div className="topic">{conf.topic}</div>
+                      <div className="location">{conf.location}</div>
                       <p>{conf.description}</p>
                       {conf.video_link && (
                         <DesktopVideoIcon
