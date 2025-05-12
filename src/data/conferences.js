@@ -7,7 +7,7 @@ export const conferences = [
     title: 'DATAHACK Summit',
     topic: 'Agentic AI with CrewAI',
     date: 'August 20, 2025',
-    description: 'Presenting and leading a workshopt about Agentic AI with CrewAI',
+    description: 'Presenting and leading a workshop about Agentic AI with CrewAI',
     location: 'Bangaluru',
     info_link: 'https://www.analyticsvidhya.com/datahacksummit/'
   },
