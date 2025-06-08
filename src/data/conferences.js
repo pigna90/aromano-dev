@@ -4,6 +4,14 @@
  */
 export const conferences = [
   {
+    title: 'NDC Porto 2025',
+    topic: 'Agentic AI: Build a Multi-Agent Application with CrewAI',
+    date: 'October 20, 2025',
+    description: 'Leading a workshop about Agentic AI with CrewAI',
+    location: 'Porto',
+    info_link: 'https://ndcporto.com/'
+  },
+  {
     title: 'DATAHACK Summit',
     topic: 'Agentic AI with CrewAI',
     date: 'August 20, 2025',
