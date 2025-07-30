@@ -4,6 +4,14 @@
  */
 export const conferences = [
   {
+    title: 'Porto Tech Hub 2025',
+    topic: 'Agentic AI: Build a Multi-Agent Application with CrewAI',
+    date: 'October 7, 2025',
+    description: 'Leading a workshop about Agentic AI with CrewAI',
+    location: 'Porto',
+    info_link: 'https://portotechhub.com/conference-2025/'
+  },
+  {
     title: 'NDC Porto 2025',
     topic: 'Agentic AI: Build a Multi-Agent Application with CrewAI',
     date: 'October 20, 2025',
