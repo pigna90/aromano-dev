@@ -17,13 +17,18 @@ export const socialLinks = [
     icon: faMedium
   },
   {
-    name: 'MentorCruise',
-    url: 'https://mentorcruise.com/mentor/alessandroromano/',
-    isMentorIcon: true
+    name: 'Substack',
+    url: 'https://alerom90.substack.com/?r=6cbz4y&utm_campaign=pub-share-checklist',
+    isSubstackIcon: true
   },
   {
     name: 'YouTube',
     url: 'https://www.youtube.com/@alessandro-romano90',
     icon: faYoutube
+  },
+  {
+    name: 'MentorCruise',
+    url: 'https://mentorcruise.com/mentor/alessandroromano/',
+    isMentorIcon: true
   }
 ]; 

@@ -113,6 +113,14 @@ const MentorIcon = styled.span`
   transform: translateY(-1px);
 `;
 
+const SubstackIcon = styled.img`
+  width: 1.8rem;
+  height: 1.8rem;
+  display: inline-block;
+  filter: brightness(0) invert(1);
+  transition: all 0.3s ease;
+`;
+
 const Hero = () => {
   const [showHover, setShowHover] = useState(false);
   const profileImageRef = useRef(null);
@@ -195,6 +203,8 @@ const Hero = () => {
             >
               {link.isMentorIcon ? (
                 <MentorIcon>M</MentorIcon>
+              ) : link.isSubstackIcon ? (
+                <SubstackIcon src="/images/brand/substack-logo.svg" alt="Substack" />
               ) : (
                 <FontAwesomeIcon icon={link.icon} />
               )}
