@@ -3,90 +3,123 @@
  */
 export async function fetchBlogPosts() {
   try {
-    // Using a CORS proxy to access Medium's RSS feed
-    const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@alerom90');
-    const data = await response.json();
+    // Fetch Medium posts
+    const mediumResponse = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@alerom90');
+    const mediumData = await mediumResponse.json();
     
-    if (data.status !== 'ok') {
-      throw new Error('Failed to fetch RSS feed');
+    // Fetch Substack posts
+    const substackResponse = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://alerom90.substack.com/feed');
+    const substackData = await substackResponse.json();
+    
+    if (mediumData.status !== 'ok') {
+      throw new Error('Failed to fetch Medium RSS feed');
     }
 
-    // Get the two most recent posts
-    const posts = data.items.slice(0, 2).map(item => {
-      // Extract image from content if not available in thumbnail
-      let image = item.thumbnail;
+    if (substackData.status !== 'ok') {
+      throw new Error('Failed to fetch Substack RSS feed');
+    }
+
+    const posts = [];
+
+    // Process Medium post (latest one)
+    if (mediumData.items.length > 0) {
+      const mediumItem = mediumData.items[0];
+      let image = mediumItem.thumbnail;
       
       if (!image) {
-        // Try to find the first image in the content
         const imgRegex = /<img[^>]+src="([^">]+)"[^>]*>/g;
-        const matches = [...item.content.matchAll(imgRegex)];
+        const matches = [...mediumItem.content.matchAll(imgRegex)];
         if (matches.length > 0) {
           image = matches[0][1];
         }
       }
 
-      // Clean up the description
-      const cleanDescription = item.description
-        .replace(/<h3>.*?<\/h3>/g, '') // Remove h3 tags and content
-        .replace(/<[^>]*>/g, '') // Remove remaining HTML tags
-        .replace(/\s+/g, ' ') // Replace multiple spaces with single space
-        .replace(/Continue reading on.*$/, '') // Remove "Continue reading on" text
+      const cleanDescription = mediumItem.description
+        .replace(/<h3>.*?<\/h3>/g, '')
+        .replace(/<[^>]*>/g, '')
+        .replace(/\s+/g, ' ')
+        .replace(/Continue reading on.*$/, '')
         .trim();
 
-      // Extract first two lines of the article
       const firstTwoLines = cleanDescription.split('\n').slice(0, 2).join(' ').trim();
 
-      console.log('First two lines:', firstTwoLines);
-
-      // Extract the actual subtitle from the content
-      const subtitleMatch = item.content.match(/<p[^>]*>(.*?)<\/p>/);
-      const subtitle = subtitleMatch ? subtitleMatch[1].replace(/<[^>]*>/g, '').trim() : cleanDescription.split('.')[0].trim();
-
-      console.log('Article subtitle:', subtitle);
-
-      const fullDescription = cleanDescription.slice(0, 200) + '...';
-
-      console.log('Raw description:', item.description);
-      console.log('Cleaned description:', cleanDescription);
-      console.log('Extracted subtitle:', subtitle);
-
-      // If still no image, try to extract from description
-      if (!image && item.description.includes('<img')) {
-        const descImgMatch = item.description.match(/<img[^>]+src="([^">]+)"[^>]*>/);
+      if (!image && mediumItem.description.includes('<img')) {
+        const descImgMatch = mediumItem.description.match(/<img[^>]+src="([^">]+)"[^>]*>/);
         if (descImgMatch) {
           image = descImgMatch[1];
         }
       }
 
-      // Make sure image URL uses HTTPS
       if (image && image.startsWith('http:')) {
         image = image.replace('http:', 'https:');
       }
 
-      // If still no image, use a default placeholder
       if (!image) {
         image = 'https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg';
       }
 
-      console.log('Processed post:', {
-        title: item.title,
-        image: image,
-        description: fullDescription.substring(0, 50) + '...'
-      });
-
-      return {
-        title: item.title,
-        date: new Date(item.pubDate).toLocaleDateString('en-US', { 
+      posts.push({
+        title: mediumItem.title,
+        date: new Date(mediumItem.pubDate).toLocaleDateString('en-US', { 
           year: 'numeric', 
           month: 'long', 
           day: 'numeric' 
         }),
-        subtitle: subtitle,
         description: firstTwoLines,
-        link: item.link,
-        image: image
-      };
-    });
+        link: mediumItem.link,
+        image: image,
+        source: 'Medium'
+      });
+    }
+
+    // Process Substack post (latest one)
+    if (substackData.items.length > 0) {
+      const substackItem = substackData.items[0];
+      let image = substackItem.thumbnail;
+      
+      if (!image) {
+        const imgRegex = /<img[^>]+src="([^">]+)"[^>]*>/g;
+        const matches = [...substackItem.content.matchAll(imgRegex)];
+        if (matches.length > 0) {
+          image = matches[0][1];
+        }
+      }
+
+      const cleanDescription = substackItem.description
+        .replace(/<[^>]*>/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      const firstTwoLines = cleanDescription.split('\n').slice(0, 2).join(' ').trim();
+
+      if (!image && substackItem.description.includes('<img')) {
+        const descImgMatch = substackItem.description.match(/<img[^>]+src="([^">]+)"[^>]*>/);
+        if (descImgMatch) {
+          image = descImgMatch[1];
+        }
+      }
+
+      if (image && image.startsWith('http:')) {
+        image = image.replace('http:', 'https:');
+      }
+
+      if (!image) {
+        image = 'https://substackcdn.com/image/fetch/w_1200,h_600,c_fill,f_jpg,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdefault_cover_image.png';
+      }
+
+      posts.push({
+        title: substackItem.title,
+        date: new Date(substackItem.pubDate).toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        }),
+        description: firstTwoLines,
+        link: substackItem.link,
+        image: image,
+        source: 'Substack'
+      });
+    }
     
     console.log('Fetched posts:', posts);
     return posts;
@@ -99,14 +132,16 @@ export async function fetchBlogPosts() {
         date: 'March 26, 2024',
         description: 'A detailed comparison between Pandas and Polars, exploring their differences in syntax, performance, and use cases to help you choose the right tool for your data analysis needs.',
         link: 'https://medium.com/@alerom90/pandas-vs-polars-a-comprehensive-comparison-df1bff469489',
-        image: 'https://miro.medium.com/v2/resize:fit:1400/format:webp/1*Ry_FQpiLqgZJ-wZqZF_Qbw.png'
+        image: 'https://miro.medium.com/v2/resize:fit:1400/format:webp/1*Ry_FQpiLqgZJ-wZqZF_Qbw.png',
+        source: 'Medium'
       },
       {
-        title: 'Agentic AI: Building Multi-Agent Applications with CrewAI',
+        title: 'Latest from Substack',
         date: 'March 19, 2024',
-        description: 'Learn how to build and orchestrate AI agents using CrewAI, a powerful framework for creating multi-agent applications that can work together to solve complex tasks.',
-        link: 'https://medium.com/@alerom90/agentic-ai-building-multi-agent-applications-with-crewai-52bef977350f',
-        image: 'https://miro.medium.com/v2/resize:fit:1400/format:webp/1*mWBPQfaQhtNa-yqK7lhkrA.png'
+        description: 'Check out my latest thoughts and insights on my Substack newsletter.',
+        link: 'https://alerom90.substack.com/?r=6cbz4y&utm_campaign=pub-share-checklist',
+        image: 'https://substackcdn.com/image/fetch/w_1200,h_600,c_fill,f_jpg,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdefault_cover_image.png',
+        source: 'Substack'
       }
     ];
   }
