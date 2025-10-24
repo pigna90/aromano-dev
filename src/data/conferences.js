@@ -4,6 +4,14 @@
  */
 export const conferences = [
   {
+    title: 'Data & AI Summit 2026',
+    topic: 'TBA',
+    date: 'April 21, 2026',
+    description: 'TBA',
+    location: 'Warsaw',
+    info_link: 'https://dataiwarsaw.tech/'
+  },
+  {
     title: 'Porto Tech Hub 2025',
     topic: 'Agentic AI: Build a Multi-Agent Application with CrewAI',
     date: 'October 7, 2025',
