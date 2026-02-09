@@ -9,6 +9,7 @@ import CookieConsent from './components/CookieConsent';
 const About = lazy(() => import('./components/About'));
 const Experience = lazy(() => import('./components/Experience'));
 const Conferences = lazy(() => import('./components/Conferences'));
+const Podcast = lazy(() => import('./components/Podcast'));
 const Blog = lazy(() => import('./components/Blog'));
 const Hobbies = lazy(() => import('./components/Hobbies'));
 const Education = lazy(() => import('./components/Education'));
@@ -41,6 +42,9 @@ function App() {
       </Suspense>
       <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
         <Conferences />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
+        <Podcast />
       </Suspense>
       <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
         <Blog />

@@ -289,6 +289,19 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
+              to="podcast"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+              activeClass="active"
+              onClick={closeMenu}
+            >
+              Podcast
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="blog"
               spy={true}
               smooth={true}
