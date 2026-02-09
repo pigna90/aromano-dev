@@ -4,6 +4,14 @@
  */
 export const conferences = [
   {
+    title: 'PyCon DE & PyData 2026',
+    topic: 'TBA',
+    date: 'April 14, 2026',
+    description: 'TBA',
+    location: 'Drmstadt',
+    info_link: 'https://2026.pycon.de/'
+  },
+  {
     title: 'Data & AI Summit 2026',
     topic: 'TBA',
     date: 'April 21, 2026',
