@@ -4,18 +4,34 @@
  */
 export const conferences = [
   {
+    title: 'PyCon Italy 2026',
+    topic: 'The New Wave of Time Series Foundation Models',
+    date: 'May 27, 2026',
+    description: 'Deep dive into how LLMs are transforming time series analysis.',
+    location: 'Bologna',
+    info_link: 'https://2026.pycon.it/en'
+  },
+  {
     title: 'PyCon DE & PyData 2026',
-    topic: 'TBA',
+    topic: 'Building a Digital Self with Telegram Chat Fine-Tuning',
     date: 'April 14, 2026',
-    description: 'TBA',
+    description: 'The story of how I built a digital self using Telegram chat and LoRA fine-tuning.',
     location: 'Drmstadt',
     info_link: 'https://2026.pycon.de/'
   },
   {
+    title: 'OTTO Group',
+    topic: 'The New Wave of Time Series Foundation Models',
+    date: 'April 23, 2026',
+    description: 'Deep dive into how LLMs are transforming time series analysis.',
+    location: 'Hamburg',
+    info_link: 'https://www.ottogroup.com/de/'
+  },
+  {
     title: 'Data & AI Summit 2026',
-    topic: 'TBA',
+    topic: 'The New Wave of Time Series Foundation Models',
     date: 'April 21, 2026',
-    description: 'TBA',
+    description: 'Deep dive into how LLMs are transforming time series analysis.',
     location: 'Warsaw',
     info_link: 'https://dataiwarsaw.tech/'
   },
