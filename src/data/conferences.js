@@ -3,6 +3,14 @@
  * Conferences are automatically categorized as 'upcoming' or 'past' based on their date
  */
 export const conferences = [
+   {
+    title: 'DATAHACK Summit',
+    topic: 'Time Series Foundation Models and Langraph in production Workshop',
+    date: 'August 5, 2026',
+    description: 'Presenting and leading a workshop about Agentic AI with Langraph and Time Series Foundation Models',
+    location: 'Bangaluru',
+    info_link: 'https://www.analyticsvidhya.com/datahacksummit/'
+  },
   {
     title: 'PyCon Italy 2026',
     topic: 'The New Wave of Time Series Foundation Models',
@@ -10,14 +18,6 @@ export const conferences = [
     description: 'Deep dive into how LLMs are transforming time series analysis.',
     location: 'Bologna',
     info_link: 'https://2026.pycon.it/en'
-  },
-  {
-    title: 'PyCon DE & PyData 2026',
-    topic: 'Building a Digital Self with Telegram Chat Fine-Tuning',
-    date: 'April 14, 2026',
-    description: 'The story of how I built a digital self using Telegram chat and LoRA fine-tuning.',
-    location: 'Drmstadt',
-    info_link: 'https://2026.pycon.de/'
   },
   {
     title: 'OTTO Group',
