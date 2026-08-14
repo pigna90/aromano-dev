@@ -3,6 +3,13 @@
  * Conferences are automatically categorized as 'upcoming' or 'past' based on their date
  */
 export const conferences = [
+  {
+    title: 'MDM & Data Governance Summit',
+    topic: 'TBD',
+    date: 'January 20, 2027',
+    description: 'Speaking at the MDM & Data Governance Summit (January 20–21, 2027). Talk topic to be announced.',
+    location: 'Amsterdam'
+  },
    {
     title: 'DATAHACK Summit',
     topic: 'Time Series Foundation Models and Langraph in production Workshop',
