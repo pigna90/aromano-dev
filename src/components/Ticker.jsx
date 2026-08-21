@@ -62,14 +62,21 @@ const Item = styled.span`
   }
 `;
 
+/*
+ * Skills only, and only ones the page backs up further down: every entry here
+ * also appears in an Experience stack or a talk topic.
+ */
 const items = [
-  'Pricing',
+  'Dynamic pricing',
   'Forecasting',
   'Agentic AI',
-  'Public speaking',
-  'Podcast host',
-  'Mentoring',
-  'Amsterdam',
+  'LLMs',
+  'Multi-agent systems',
+  'MLOps',
+  'Causal inference',
+  'A/B testing',
+  'Time series',
+  'Python',
 ];
 
 const Ticker = () => (

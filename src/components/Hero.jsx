@@ -82,6 +82,9 @@ const Role = styled(motion.p)`
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.ink};
   margin-bottom: 2.75rem;
+  /* Four items will not fit one line on a phone, so balance the break into
+     two even halves rather than leave "musician" orphaned. */
+  text-wrap: balance;
 
   @media (max-width: 768px) {
     letter-spacing: 0.1em;
@@ -300,6 +303,15 @@ const Portrait = styled(motion.div)`
   }
 `;
 
+/*
+ * Wrapping is allowed only after a slash. Every space inside an item and every
+ * space before a slash is non-breaking, so a wrapped line on a phone can never
+ * open with a slash or split "AI Engineer" down the middle.
+ */
+const ROLE = ['Data Scientist', 'AI Engineer', 'Speaker', 'Musician']
+  .map((item) => item.replace(/ /g, '\u00a0'))
+  .join('\u00a0/ ');
+
 const fadeUp = (delay) => ({
   initial: { opacity: 0, y: 14 },
   animate: { opacity: 1, y: 0 },
@@ -355,7 +367,7 @@ const Hero = () => {
           style={{ transformOrigin: 'left' }}
         />
 
-        <Role {...fadeUp(0.16)}>Data Scientist / Pricing / Agentic AI</Role>
+        <Role {...fadeUp(0.16)}>{ROLE}</Role>
 
         <Lower>
           <div>

@@ -7,9 +7,18 @@ const GalleryContainer = styled.div`
   position: relative;
 `;
 
+/*
+ * The photos are all 3:2, so 16:9 trims about 16% of their height: enough to
+ * keep the frame cinematic, nowhere near the third that 21:9 was taking off the
+ * top and bottom. On a phone the frame goes back to 3:2 so nothing is cropped
+ * at the size where the subject is already small. The width cap stops the frame
+ * turning into a full-measure slab on a wide screen.
+ */
 const CarouselContainer = styled.div`
   position: relative;
-  aspect-ratio: 21 / 9;
+  width: 100%;
+  max-width: 1040px;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: ${({ theme }) => theme.colors.surfaceSunken};
   border: ${({ theme }) => theme.borders.thick} solid
@@ -17,7 +26,7 @@ const CarouselContainer = styled.div`
   box-shadow: ${({ theme }) => theme.colors.shadowHardLg};
 
   @media (max-width: 768px) {
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 3 / 2;
     border-width: ${({ theme }) => theme.borders.base};
     box-shadow: ${({ theme }) => theme.colors.shadowHard};
   }
