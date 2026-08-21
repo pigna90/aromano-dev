@@ -372,8 +372,9 @@ const Hero = () => {
         <Lower>
           <div>
             <Positioning {...fadeUp(0.22)}>
-              I work where data meets the business: pricing, forecasting and
-              agentic AI, on the problems that don&apos;t come with a clear path.
+              I solve problems with data. I build AI systems and put them to
+              work, break them, and fix them again. Software engineer from the
+              start.
             </Positioning>
 
             <Facts {...fadeUp(0.28)}>
