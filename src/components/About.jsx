@@ -5,8 +5,10 @@ import Image from './common/Image';
 
 const Content = styled.div`
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  gap: 3.5rem;
+  /* The image column earns its keep across the measure instead of sitting as
+     a thumbnail with 400px of empty paper beside the text. */
+  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+  gap: 4rem;
   align-items: start;
   width: 100%;
 
@@ -30,7 +32,7 @@ const Portrait = styled(motion.div)`
 `;
 
 const AboutText = styled(motion.div)`
-  max-width: ${({ theme }) => theme.layout.readWidth};
+  max-width: 68ch;
 
   p {
     font-size: 1.0625rem;

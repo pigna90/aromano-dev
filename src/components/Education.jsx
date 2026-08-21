@@ -3,12 +3,13 @@ import { motion } from 'framer-motion';
 import { Section, SectionContent, Title, Tag } from '../styles/SharedStyles';
 
 const EducationContainer = styled.div`
-  max-width: 900px;
+  width: 100%;
 `;
 
+/* Same three-column measure as Experience: date rail, degree, coursework. */
 const EducationItem = styled(motion.article)`
   display: grid;
-  grid-template-columns: 9rem minmax(0, 1fr);
+  grid-template-columns: 11rem minmax(0, 1fr) minmax(0, 19rem);
   gap: 2rem;
   padding: 2.25rem 0;
   border-top: ${({ theme }) => theme.borders.base} solid
@@ -19,10 +20,22 @@ const EducationItem = styled(motion.article)`
       ${({ theme }) => theme.colors.ink};
   }
 
+  @media (max-width: 1080px) {
+    grid-template-columns: 11rem minmax(0, 1fr);
+
+    .coursework {
+      grid-column: 2;
+    }
+  }
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 0.85rem;
     padding: 1.75rem 0;
+
+    .coursework {
+      grid-column: auto;
+    }
   }
 
   .date {
@@ -75,11 +88,11 @@ const EducationItem = styled(motion.article)`
 
   /* Thesis sits in its own hard-bordered box */
   .thesis {
+    max-width: 62ch;
     padding: 0.85rem 1rem;
     border: ${({ theme }) => theme.borders.thin} solid
       ${({ theme }) => theme.colors.ink};
     background: ${({ theme }) => theme.colors.surface};
-    margin-bottom: 1.25rem;
 
     .thesis-label {
       display: block;
@@ -103,7 +116,13 @@ const EducationItem = styled(motion.article)`
   .coursework {
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
     gap: 0.4rem;
+    padding-top: 0.5rem;
+
+    @media (max-width: 1080px) {
+      padding-top: 1.25rem;
+    }
   }
 `;
 
@@ -154,11 +173,11 @@ const Education = () => {
                   <span className="thesis-label">Thesis</span>
                   <span className="thesis-title">{edu.details.thesis}</span>
                 </div>
-                <div className="coursework">
-                  {edu.details.courses.map((course) => (
-                    <Tag key={course}>{course}</Tag>
-                  ))}
-                </div>
+              </div>
+              <div className="coursework">
+                {edu.details.courses.map((course) => (
+                  <Tag key={course}>{course}</Tag>
+                ))}
               </div>
             </EducationItem>
           ))}

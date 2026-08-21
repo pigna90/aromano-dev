@@ -3,16 +3,17 @@ import { motion } from 'framer-motion';
 import { Section, SectionContent, Title, Tag } from '../styles/SharedStyles';
 
 const ExperienceContainer = styled.div`
-  max-width: 900px;
+  width: 100%;
 `;
 
 /**
- * Left rail carries the date in mono; the role sits on the right. Thick rules
- * between entries instead of floating cards.
+ * Three columns across the full measure: date rail, then the role and what it
+ * involved, then the stack pushed out to the right edge. Thick rules between
+ * entries instead of floating cards.
  */
 const ExperienceItem = styled(motion.article)`
   display: grid;
-  grid-template-columns: 9rem minmax(0, 1fr);
+  grid-template-columns: 11rem minmax(0, 1fr) minmax(0, 19rem);
   gap: 2rem;
   padding: 2.25rem 0;
   border-top: ${({ theme }) => theme.borders.base} solid
@@ -23,10 +24,23 @@ const ExperienceItem = styled(motion.article)`
       ${({ theme }) => theme.colors.ink};
   }
 
+  /* The stack loses its own column before the prose gets uncomfortably wide. */
+  @media (max-width: 1080px) {
+    grid-template-columns: 11rem minmax(0, 1fr);
+
+    .stack {
+      grid-column: 2;
+    }
+  }
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 0.85rem;
     padding: 1.75rem 0;
+
+    .stack {
+      grid-column: auto;
+    }
   }
 
   .date {
@@ -74,7 +88,8 @@ const ExperienceItem = styled(motion.article)`
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    margin-bottom: 1.25rem;
+    /* The column is wide now, so cap the prose rather than the layout. */
+    max-width: 62ch;
   }
 
   .responsibility {
@@ -98,7 +113,13 @@ const ExperienceItem = styled(motion.article)`
   .stack {
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
     gap: 0.4rem;
+    padding-top: 0.5rem;
+
+    @media (max-width: 1080px) {
+      padding-top: 1.25rem;
+    }
   }
 `;
 
@@ -166,11 +187,11 @@ const Experience = () => {
                     </p>
                   ))}
                 </div>
-                <div className="stack">
-                  {exp.stack.map((item) => (
-                    <Tag key={item}>{item}</Tag>
-                  ))}
-                </div>
+              </div>
+              <div className="stack">
+                {exp.stack.map((item) => (
+                  <Tag key={item}>{item}</Tag>
+                ))}
               </div>
             </ExperienceItem>
           ))}

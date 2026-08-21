@@ -385,31 +385,33 @@ const Hero = () => {
                 </dd>
               </Fact>
 
-              {nextTalk && (
-                <Fact>
-                  <dt>Next</dt>
-                  <dd>
-                    {nextTalk.info_link ? (
-                      <a
-                        href={nextTalk.info_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {nextTalk.title}
-                      </a>
-                    ) : (
-                      nextTalk.title
-                    )}
+              {/* The block always stands, so the row keeps its three-up shape
+                  even in a gap between bookings. */}
+              <Fact>
+                <dt>Next Conference</dt>
+                <dd>
+                  {!nextTalk && 'Coming soon'}
+                  {nextTalk && nextTalk.info_link && (
+                    <a
+                      href={nextTalk.info_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {nextTalk.title}
+                    </a>
+                  )}
+                  {nextTalk && !nextTalk.info_link && nextTalk.title}
+                  {nextTalk && (
                     <span className="aside">
                       {nextTalk.location} ·{' '}
                       {formatTalkDate(new Date(nextTalk.date))}
                     </span>
-                  </dd>
-                </Fact>
-              )}
+                  )}
+                </dd>
+              </Fact>
 
               <Fact $fill="alt">
-                <dt>Podcast</dt>
+                <dt>Podcast &amp; Teaching</dt>
                 <dd>
                   <a
                     href="https://mydataguest.substack.com/"

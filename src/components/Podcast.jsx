@@ -3,8 +3,8 @@ import { Section, SectionContent, Title, Button, Meta } from '../styles/SharedSt
 
 const PodcastContainer = styled.div`
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  gap: 3.5rem;
+  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+  gap: 4rem;
   align-items: center;
 
   @media (max-width: 768px) {
@@ -39,7 +39,7 @@ const Cover = styled.div`
 `;
 
 const PodcastContent = styled.div`
-  max-width: ${({ theme }) => theme.layout.readWidth};
+  max-width: 68ch;
 `;
 
 const PodcastDescription = styled.p`
