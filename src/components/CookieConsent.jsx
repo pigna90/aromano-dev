@@ -85,8 +85,8 @@ const CookieConsent = () => {
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         >
           <CookieText>
-            I use cookies to understand how the site is used. Analytics only —
-            nothing is sold or shared.
+            I use cookies to understand how the site is used. Analytics only.
+            Nothing is sold or shared.
           </CookieText>
           <ButtonGroup>
             <GhostButton onClick={handleDecline}>Decline</GhostButton>

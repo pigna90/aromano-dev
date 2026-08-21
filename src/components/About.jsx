@@ -70,7 +70,7 @@ const About = () => {
               I&apos;m a data scientist with a strong foundation in software
               engineering and statistics. I work at the intersection of data and
               business, solving complex problems that don&apos;t always have a
-              clear path — and that&apos;s exactly what I enjoy most.
+              clear path, and that&apos;s exactly what I enjoy most.
             </p>
             <p>
               I focus on creating solutions that matter, always with the goal of

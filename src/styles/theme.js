@@ -2,7 +2,7 @@
  * Design tokens.
  *
  * Every colour, font, radius and spacing step in the site comes from here.
- * Components should never hardcode a hex value — reach for `theme.colors.*`
+ * Components should never hardcode a hex value. Reach for `theme.colors.*`
  * so light and dark stay in sync.
  */
 
@@ -39,13 +39,13 @@ export const lightTheme = {
   ...shared,
   name: 'light',
   colors: {
-    // Surfaces — warm paper, not clinical white
+    // Surfaces: warm paper, not clinical white
     bg: '#FDFCFA',
     bgAlt: '#F6F4EF',
     surface: '#FFFFFF',
     surfaceSunken: '#F1EEE8',
 
-    // Text — checked against `bg` for WCAG AA
+    // Text: checked against `bg` for WCAG AA
     ink: '#14181C',
     inkSecondary: '#39424B',
     inkMuted: '#626C77',

@@ -97,7 +97,7 @@ const Positioning = styled(motion.p)`
   }
 `;
 
-/** The "Now" strip: current role, next talk, podcast — evidence above the fold. */
+/** The "Now" strip: current role, next talk, podcast. Evidence above the fold. */
 const NowStrip = styled(motion.dl)`
   border-top: 1px solid ${({ theme }) => theme.colors.hairline};
   margin-bottom: 2.25rem;
@@ -304,8 +304,8 @@ const Hero = () => {
           </Name>
 
           <Positioning {...fadeUp(0.12)}>
-            I work where data meets the business — pricing, forecasting and
-            agentic AI — on the problems that don&apos;t come with a clear path.
+            I work where data meets the business: pricing, forecasting and
+            agentic AI, on the problems that don&apos;t come with a clear path.
           </Positioning>
 
           <NowStrip {...fadeUp(0.18)}>

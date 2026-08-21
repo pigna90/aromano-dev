@@ -11,7 +11,7 @@ const GlobalStyles = createGlobalStyle`
     --font-size-base: 16px;
     --line-height-base: 1.65;
 
-    /* Fluid display scale — no media queries needed for headings */
+    /* Fluid display scale, so no media queries are needed for headings */
     --font-size-hero: clamp(2.75rem, 8vw, 5.25rem);
     --font-size-h1: clamp(2.25rem, 5vw, 3.5rem);
     --font-size-h2: clamp(2rem, 4.5vw, 3.25rem);

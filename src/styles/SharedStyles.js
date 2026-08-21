@@ -62,7 +62,7 @@ export const Lead = styled.p`
   color: ${({ theme }) => theme.colors.inkMuted};
 `;
 
-/** Mono, uppercase, letterspaced — dates, locations, labels. */
+/** Mono, uppercase, letterspaced: dates, locations, labels. */
 export const Meta = styled.span`
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: var(--font-size-meta);

@@ -16,7 +16,7 @@ const getStoredMode = () => {
     const stored = localStorage.getItem(STORAGE_KEY);
     return stored === 'light' || stored === 'dark' ? stored : null;
   } catch {
-    // Private browsing or blocked storage — fall back to the system preference.
+    // Private browsing or blocked storage: fall back to the system preference.
     return null;
   }
 };
