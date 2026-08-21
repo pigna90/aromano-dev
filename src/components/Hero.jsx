@@ -412,7 +412,7 @@ const Hero = () => {
               </Fact>
 
               <Fact $fill="alt">
-                <dt>Podcast &amp; Teaching</dt>
+                <dt>Podcast &amp; Courses</dt>
                 <dd>
                   <a
                     href="https://mydataguest.substack.com/"
