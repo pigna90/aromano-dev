@@ -1,8 +1,10 @@
-import { useEffect, Suspense, lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import styled from 'styled-components';
 import GlobalStyles from './styles/GlobalStyles';
+import { ThemeProvider } from './styles/ThemeContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import Ticker from './components/Ticker';
 import CookieConsent from './components/CookieConsent';
 
 // Lazy load components that are not immediately visible
@@ -16,56 +18,44 @@ const Education = lazy(() => import('./components/Education'));
 const ContactForm = lazy(() => import('./components/ContactForm'));
 const Footer = lazy(() => import('./components/Footer'));
 
-const LoadingFallback = styled.div`
-  min-height: 100vh;
+/**
+ * Reserves roughly a section's worth of height so the page doesn't jump as
+ * each lazy chunk resolves.
+ */
+const SectionSkeleton = styled.div`
+  min-height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #6c5ce7, #a8e6cf);
-  color: white;
-  font-size: 1.2rem;
+  border-top: ${({ theme }) => theme.borders.thick} solid
+    ${({ theme }) => theme.colors.hairline};
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: var(--font-size-meta);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.inkMuted};
 `;
 
-function App() {
-  useEffect(() => {
-    // Smooth scroll behavior
-    document.documentElement.style.scrollBehavior = 'smooth';
-  }, []);
+const sections = [About, Conferences, Podcast, Blog, Experience, Education, Hobbies, ContactForm];
 
+function App() {
   return (
-    <>
+    <ThemeProvider>
       <GlobalStyles />
       <Navbar />
       <Hero />
-      <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
-        <About />
-      </Suspense>
-      <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
-        <Conferences />
-      </Suspense>
-      <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
-        <Podcast />
-      </Suspense>
-      <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
-        <Blog />
-      </Suspense>
-      <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
-        <Experience />
-      </Suspense>
-      <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
-        <Education />
-      </Suspense>
-      <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
-        <Hobbies />
-      </Suspense>
-      <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
-        <ContactForm />
-      </Suspense>
-      <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
+      <Ticker />
+      {sections.map((SectionComponent, index) => (
+        <Suspense key={index} fallback={<SectionSkeleton>Loading</SectionSkeleton>}>
+          <SectionComponent />
+        </Suspense>
+      ))}
+      <Suspense fallback={null}>
         <Footer />
       </Suspense>
       <CookieConsent />
-    </>
+    </ThemeProvider>
   );
 }
 

@@ -1,84 +1,105 @@
 import styled from 'styled-components';
-import { Section, SectionContent, Title } from '../styles/SharedStyles';
+import { Section, SectionContent, Title, Button, Meta } from '../styles/SharedStyles';
 
 const PodcastContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+  gap: 4rem;
   align-items: center;
-  gap: 3rem;
-  max-width: 900px;
-  margin: 0 auto;
 
   @media (max-width: 768px) {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 2rem;
   }
 `;
 
-const PodcastImage = styled.img`
-  width: 250px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  flex-shrink: 0;
+const Cover = styled.div`
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  /* Stays a light panel in both modes: the cover art is teal and orange on
+     transparent, and it needs a pale field behind it to read. */
+  background: #ffffff;
+  border: ${({ theme }) => theme.borders.thick} solid
+    ${({ theme }) => theme.colors.ink};
+  box-shadow: ${({ theme }) => theme.colors.shadowHard};
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 
   @media (max-width: 768px) {
-    width: 200px;
-    height: 200px;
+    max-width: 200px;
   }
 `;
 
 const PodcastContent = styled.div`
-  flex: 1;
+  max-width: 68ch;
+`;
+
+const Name = styled.h3`
+  font-family: ${({ theme }) => theme.fonts.display};
+  font-size: 2rem;
+  font-weight: 900;
+  font-stretch: 100%;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.ink};
+  margin: 0.4rem 0 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.625rem;
+  }
 `;
 
 const PodcastDescription = styled.p`
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: #555;
-  margin-bottom: 1.5rem;
-`;
-
-const PodcastLink = styled.a`
-  display: inline-block;
-  padding: 0.8rem 2rem;
-  background: linear-gradient(135deg, #6c5ce7, #a8e6cf);
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 8px rgba(108, 92, 231, 0.3);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(108, 92, 231, 0.4);
-  }
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.55;
+  color: ${({ theme }) => theme.colors.inkSecondary};
+  margin-bottom: 1.25rem;
 `;
 
 const Podcast = () => {
   return (
     <Section id="podcast">
       <SectionContent>
-        <Title>My Data Guest Podcast</Title>
+        <Title>Podcast &amp; Courses</Title>
         <PodcastContainer>
-          <PodcastImage
-            src="/images/brand/logo_transparent.png"
-            alt="My Data Guest Podcast Cover"
-          />
+          <Cover>
+            <img
+              src="/images/brand/logo_transparent.png"
+              alt="My Data Guest podcast cover"
+            />
+          </Cover>
           <PodcastContent>
+            <Meta>Podcast and learning platform · with Rosaria Silipo</Meta>
+            <Name>My Data Guest</Name>
             <PodcastDescription>
-              Your go-to podcast for exploring the world of artificial intelligence without the hype.
-              Together with Rosaria Silipo, I dive into breakthroughs in Agentic AI, prompt engineering,
-              large language models, ethical dilemmas, and the real implications of AI.
+              Artificial intelligence without the hype. Together with Rosaria
+              Silipo I dig into agentic AI, prompt engineering, large language
+              models, the ethical dilemmas nobody wants to open, and what all of
+              it actually means in practice.
             </PodcastDescription>
-            <PodcastLink
+            <PodcastDescription>
+              It is not only a podcast. We also run courses there, hands-on and
+              built around the way this work really goes: you build the thing,
+              you break it, you understand why, you fix it.
+            </PodcastDescription>
+            <Button
+              as="a"
               href="https://mydataguest.substack.com/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Listen on Substack
-            </PodcastLink>
+              Listen and learn on Substack
+            </Button>
           </PodcastContent>
         </PodcastContainer>
       </SectionContent>

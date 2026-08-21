@@ -1,56 +1,56 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Button, GhostButton } from '../styles/SharedStyles';
 
 const CookieBanner = styled(motion.div)`
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(44, 62, 80, 0.95);
-  color: white;
-  padding: 1rem;
-  z-index: 1000;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  max-width: 620px;
+  margin: 0 auto;
+  background: ${({ theme }) => theme.colors.surface};
+  border: ${({ theme }) => theme.borders.thick} solid
+    ${({ theme }) => theme.colors.ink};
+  box-shadow: ${({ theme }) => theme.colors.shadowHard};
+  color: ${({ theme }) => theme.colors.ink};
+  padding: 1.25rem 1.5rem;
+  z-index: 1100;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  text-align: center;
+  gap: 1.5rem;
 
-  @media (max-width: 768px) {
-    padding: 1rem;
+  @media (max-width: 640px) {
     flex-direction: column;
-    gap: 0.5rem;
+    align-items: stretch;
+    gap: 1rem;
   }
 `;
 
 const CookieText = styled.p`
   margin: 0;
-  font-size: 0.9rem;
-  max-width: 600px;
-  line-height: 1.4;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: ${({ theme }) => theme.colors.inkSecondary};
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
   gap: 0.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
+  flex-shrink: 0;
 
-const Button = styled.button`
-  background: ${props => props.$primary ? '#3498db' : 'transparent'};
-  color: white;
-  border: ${props => props.$primary ? 'none' : '1px solid white'};
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+  button {
+    padding: 0.65rem 1.1rem;
+    font-size: 0.7rem;
+  }
 
-  &:hover {
-    background: ${props => props.$primary ? '#2980b9' : 'rgba(255, 255, 255, 0.1)'};
+  @media (max-width: 640px) {
+    button {
+      flex: 1;
+    }
   }
 `;
 
@@ -80,18 +80,18 @@ const CookieConsent = () => {
     <AnimatePresence>
       {showConsent && (
         <CookieBanner
-          initial={{ y: 100 }}
-          animate={{ y: 0 }}
-          exit={{ y: 100 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          initial={{ y: 120, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 120, opacity: 0 }}
+          transition={{ duration: 0.18, ease: [0.2, 0, 0, 1] }}
         >
           <CookieText>
-            We use cookies to enhance your browsing experience and analyze site traffic. 
-            By clicking "Accept All", you consent to our use of cookies.
+            I use cookies to understand how the site is used. Analytics only.
+            Nothing is sold or shared.
           </CookieText>
           <ButtonGroup>
-            <Button onClick={handleDecline}>Decline</Button>
-            <Button $primary onClick={handleAccept}>Accept All</Button>
+            <GhostButton onClick={handleDecline}>Decline</GhostButton>
+            <Button onClick={handleAccept}>Accept</Button>
           </ButtonGroup>
         </CookieBanner>
       )}
@@ -99,4 +99,4 @@ const CookieConsent = () => {
   );
 };
 
-export default CookieConsent; 
+export default CookieConsent;
