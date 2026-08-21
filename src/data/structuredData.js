@@ -135,7 +135,7 @@ export const buildStructuredData = () => ({
       name: 'Alessandro Romano | Data Scientist/AI Engineer, Speaker, Mentor',
       isPartOf: { '@id': WEBSITE_ID },
       about: { '@id': PERSON_ID },
-      primaryImageOfPage: `${SITE_URL}/og-image-datahack-2026.jpg`,
+      primaryImageOfPage: `${SITE_URL}/og-card-datahack-2026.jpg`,
       inLanguage: 'en',
     },
     {
