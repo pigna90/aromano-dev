@@ -1,84 +1,79 @@
 import styled from 'styled-components';
-import { Section, SectionContent, Title } from '../styles/SharedStyles';
+import { Section, SectionContent, Title, Button, Meta } from '../styles/SharedStyles';
 
 const PodcastContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 3.5rem;
   align-items: center;
-  gap: 3rem;
-  max-width: 900px;
-  margin: 0 auto;
 
   @media (max-width: 768px) {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 2rem;
   }
 `;
 
-const PodcastImage = styled.img`
-  width: 250px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  flex-shrink: 0;
+const Cover = styled.div`
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: ${({ theme }) => theme.colors.bgAlt};
+  border: 1px solid ${({ theme }) => theme.colors.hairline};
+  border-radius: ${({ theme }) => theme.radii.lg};
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 
   @media (max-width: 768px) {
-    width: 200px;
-    height: 200px;
+    max-width: 200px;
   }
 `;
 
 const PodcastContent = styled.div`
-  flex: 1;
+  max-width: ${({ theme }) => theme.layout.readWidth};
 `;
 
 const PodcastDescription = styled.p`
-  font-size: 1.1rem;
+  font-size: 1.125rem;
   line-height: 1.7;
-  color: #555;
-  margin-bottom: 1.5rem;
-`;
-
-const PodcastLink = styled.a`
-  display: inline-block;
-  padding: 0.8rem 2rem;
-  background: linear-gradient(135deg, #6c5ce7, #a8e6cf);
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 8px rgba(108, 92, 231, 0.3);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(108, 92, 231, 0.4);
-  }
+  color: ${({ theme }) => theme.colors.inkSecondary};
+  margin: 0.75rem 0 2rem;
 `;
 
 const Podcast = () => {
   return (
     <Section id="podcast">
       <SectionContent>
-        <Title>My Data Guest Podcast</Title>
+        <Title>My Data Guest</Title>
         <PodcastContainer>
-          <PodcastImage
-            src="/images/brand/logo_transparent.png"
-            alt="My Data Guest Podcast Cover"
-          />
+          <Cover>
+            <img
+              src="/images/brand/logo_transparent.png"
+              alt="My Data Guest podcast cover"
+            />
+          </Cover>
           <PodcastContent>
+            <Meta>Podcast · with Rosaria Silipo</Meta>
             <PodcastDescription>
-              Your go-to podcast for exploring the world of artificial intelligence without the hype.
-              Together with Rosaria Silipo, I dive into breakthroughs in Agentic AI, prompt engineering,
-              large language models, ethical dilemmas, and the real implications of AI.
+              Your go-to podcast for exploring the world of artificial
+              intelligence without the hype. Together with Rosaria Silipo, I dive
+              into breakthroughs in Agentic AI, prompt engineering, large language
+              models, ethical dilemmas, and the real implications of AI.
             </PodcastDescription>
-            <PodcastLink
+            <Button
+              as="a"
               href="https://mydataguest.substack.com/"
               target="_blank"
               rel="noopener noreferrer"
             >
               Listen on Substack
-            </PodcastLink>
+            </Button>
           </PodcastContent>
         </PodcastContainer>
       </SectionContent>

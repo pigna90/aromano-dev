@@ -1,134 +1,95 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { Section, SectionContent, Title } from '../styles/SharedStyles';
+import { Section, SectionContent, Title, cardSurface } from '../styles/SharedStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faSkating, 
-  faGuitar, 
-  faSwimmer, 
-  faHome, 
+import {
+  faSkating,
+  faGuitar,
+  faSwimmer,
+  faHouseSignal,
   faPizzaSlice,
-  faSkiing,
-  faMicrophone
+  faPersonSkiing,
+  faMicrophoneLines
 } from '@fortawesome/free-solid-svg-icons';
 
+/*
+ * A wrapping row of content-width cards rather than a grid: seven items never
+ * divide evenly into tracks, so any fixed column count leaves an orphan and any
+ * flex-grow leaves the last row stretched. Sizing to content keeps every card
+ * proportional and just lets the right edge run ragged.
+ */
 const HobbiesGrid = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 1rem;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-
-  @media (max-width: 768px) {
-    gap: 0.8rem;
-    padding: 0 0.8rem;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
-    justify-items: center;
-
-    /* Center the last element if it's alone */
-    > *:last-child:nth-child(odd) {
-      grid-column: 1 / -1;
-      justify-self: center;
-    }
-  }
+  gap: 0.75rem;
 `;
 
 const HobbyCard = styled(motion.div)`
-  background: white;
-  padding: 1.2rem;
-  border-radius: 50%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  ${cardSurface}
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  transition: all 0.3s ease;
-  width: 160px;
-  height: 160px;
-  aspect-ratio: 1;
+  gap: 0.85rem;
+  padding: 1rem 1.15rem;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    border-color: ${({ theme }) => theme.colors.accentBorder};
+
+    .icon {
+      color: ${({ theme }) => theme.colors.accent};
+    }
   }
 
   .icon {
-    font-size: 2.5rem;
-    color: #3498db;
-    margin-bottom: 0.4rem;
+    flex-shrink: 0;
+    width: 1.1rem;
+    font-size: 1.1rem;
+    color: ${({ theme }) => theme.colors.inkMuted};
+    transition: color ${({ theme }) => theme.motion.base};
   }
 
   h3 {
-    color: #2c3e50;
-    font-size: 1.1rem;
+    font-family: ${({ theme }) => theme.fonts.mono};
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    color: ${({ theme }) => theme.colors.ink};
     margin: 0;
   }
 
   @media (max-width: 768px) {
-    width: 120px;
-    height: 120px;
-    padding: 0.8rem;
-
-    .icon {
-      font-size: 1.8rem;
-      margin-bottom: 0.2rem;
-    }
+    gap: 0.7rem;
+    padding: 0.85rem 1rem;
 
     h3 {
-      font-size: 0.85rem;
+      font-size: 0.75rem;
     }
   }
 `;
 
 const hobbiesData = [
-  {
-    icon: faSkating,
-    title: 'Skating'
-  },
-  {
-    icon: faGuitar,
-    title: 'Music'
-  },
-  {
-    icon: faSwimmer,
-    title: 'Swimming'
-  },
-  {
-    icon: faHome,
-    title: 'Home Automation'
-  },
-  {
-    icon: faPizzaSlice,
-    title: 'Baking'
-  },
-  {
-    icon: faSkiing,
-    title: 'Skiing'
-  },
-  {
-    icon: faMicrophone,
-    title: 'Podcast Host'
-  }
+  { icon: faGuitar, title: 'Music' },
+  { icon: faMicrophoneLines, title: 'Podcast Host' },
+  { icon: faPersonSkiing, title: 'Skiing' },
+  { icon: faSkating, title: 'Skating' },
+  { icon: faSwimmer, title: 'Swimming' },
+  { icon: faPizzaSlice, title: 'Baking' },
+  { icon: faHouseSignal, title: 'Home Automation' }
 ];
 
 const Hobbies = () => {
   return (
     <Section id="hobbies">
       <SectionContent>
-        <Title>Hobbies & Interests</Title>
+        <Title>Hobbies &amp; Interests</Title>
         <HobbiesGrid>
           {hobbiesData.map((hobby, index) => (
             <HobbyCard
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              key={hobby.title}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: index * 0.05 }}
             >
               <FontAwesomeIcon icon={hobby.icon} className="icon" />
               <h3>{hobby.title}</h3>
@@ -140,4 +101,4 @@ const Hobbies = () => {
   );
 };
 
-export default Hobbies; 
+export default Hobbies;

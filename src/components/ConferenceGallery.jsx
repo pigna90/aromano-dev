@@ -3,28 +3,26 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const GalleryContainer = styled.div`
-  margin: 1rem auto 3rem;
-  max-width: 800px;
-  padding: 0 1rem;
+  margin-bottom: 3rem;
   position: relative;
 `;
 
 const CarouselContainer = styled.div`
   position: relative;
-  aspect-ratio: 16/9;
-  border-radius: 12px;
+  aspect-ratio: 21 / 9;
+  border-radius: ${({ theme }) => theme.radii.lg};
   overflow: hidden;
-  background: #f5f6fa;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: ${({ theme }) => theme.colors.surfaceSunken};
+  border: 1px solid ${({ theme }) => theme.colors.hairline};
+
+  @media (max-width: 768px) {
+    aspect-ratio: 16 / 10;
+  }
 `;
 
 const CarouselItem = styled(motion.div)`
   position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  inset: 0;
 
   img {
     width: 100%;
@@ -37,24 +35,27 @@ const NavigationButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
-  color: #2c3e50;
-  width: 40px;
-  height: 40px;
+  background: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.hairlineStrong};
+  color: ${({ theme }) => theme.colors.ink};
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  font-size: 1.25rem;
+  line-height: 1;
+  box-shadow: ${({ theme }) => theme.colors.shadowMd};
+  transition: background ${({ theme }) => theme.motion.fast},
+    color ${({ theme }) => theme.motion.fast};
   z-index: 2;
 
   &:hover {
-    background: white;
-    transform: translateY(-50%) scale(1.1);
+    background: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.onAccent};
+    border-color: ${({ theme }) => theme.colors.accent};
   }
 
   &.prev {
@@ -66,9 +67,17 @@ const NavigationButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    width: 35px;
-    height: 35px;
-    font-size: 1.2rem;
+    width: 32px;
+    height: 32px;
+    font-size: 1.05rem;
+
+    &.prev {
+      left: 0.6rem;
+    }
+
+    &.next {
+      right: 0.6rem;
+    }
   }
 `;
 
@@ -78,22 +87,28 @@ const Dots = styled.div`
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: ${({ theme }) => theme.radii.pill};
+  background: ${({ theme }) => theme.colors.overlay};
+  backdrop-filter: blur(6px);
   z-index: 2;
 `;
 
 const Dot = styled.button`
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   border: none;
-  background: ${props => props.active ? 'white' : 'rgba(255, 255, 255, 0.5)'};
-  cursor: pointer;
-  transition: all 0.3s ease;
   padding: 0;
+  cursor: pointer;
+  background: ${(props) => (props.$active ? '#fff' : 'rgba(255, 255, 255, 0.42)')};
+  transition: background ${({ theme }) => theme.motion.fast},
+    transform ${({ theme }) => theme.motion.fast};
+  transform: ${(props) => (props.$active ? 'scale(1.25)' : 'scale(1)')};
 
   &:hover {
-    background: white;
+    background: #fff;
   }
 `;
 
@@ -101,88 +116,79 @@ const ConferenceGallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [images, setImages] = useState([]);
 
-  // Load images from the conferences folder
+  // Load every image sitting in public/images/conferences
   useEffect(() => {
-    const loadImages = async () => {
-      try {
-        // Using import.meta.glob to load all images from the conferences folder
-        const imageModules = import.meta.glob('/public/images/conferences/*.{png,jpg,jpeg,webp}', {
-          eager: true,
-          as: 'url'
-        });
-        
-        const imageList = Object.values(imageModules);
-        setImages(imageList);
-      } catch (error) {
-        console.error('Error loading conference images:', error);
-        setImages([]);
-      }
-    };
-
-    loadImages();
+    try {
+      const imageModules = import.meta.glob(
+        '/public/images/conferences/*.{png,jpg,jpeg,webp}',
+        { eager: true, query: '?url', import: 'default' }
+      );
+      setImages(Object.values(imageModules));
+    } catch (error) {
+      console.error('Error loading conference images:', error);
+      setImages([]);
+    }
   }, []);
 
-  const handlePrevious = () => {
+  const handlePrevious = () =>
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const handleDotClick = (index) => {
-    setCurrentIndex(index);
-  };
+  const handleNext = () => setCurrentIndex((prev) => (prev + 1) % images.length);
 
   // Auto-advance the carousel
   useEffect(() => {
-    if (images.length > 1) {
-      const interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % images.length);
-      }, 5000); // Change image every 5 seconds
+    if (images.length <= 1) return undefined;
 
-      return () => clearInterval(interval);
-    }
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, [images.length]);
+
+  if (images.length === 0) return null;
 
   return (
     <GalleryContainer>
       <CarouselContainer>
         <AnimatePresence mode="wait">
-          {images.length === 0 ? (
-            <CarouselItem
-              key="placeholder"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+          <CarouselItem
+            key={currentIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.45 }}
+          >
+            <img
+              src={images[currentIndex]}
+              alt={`Speaking at a conference (${currentIndex + 1} of ${images.length})`}
             />
-          ) : (
-            <CarouselItem
-              key={currentIndex}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.3 }}
-            >
-              <img 
-                src={images[currentIndex]} 
-                alt={`Conference moment ${currentIndex + 1}`} 
-              />
-            </CarouselItem>
-          )}
+          </CarouselItem>
         </AnimatePresence>
 
         {images.length > 1 && (
           <>
-            <NavigationButton className="prev" onClick={handlePrevious}>‹</NavigationButton>
-            <NavigationButton className="next" onClick={handleNext}>›</NavigationButton>
+            <NavigationButton
+              className="prev"
+              onClick={handlePrevious}
+              aria-label="Previous photo"
+            >
+              ‹
+            </NavigationButton>
+            <NavigationButton
+              className="next"
+              onClick={handleNext}
+              aria-label="Next photo"
+            >
+              ›
+            </NavigationButton>
             <Dots>
-              {images.map((_, index) => (
+              {images.map((image, index) => (
                 <Dot
-                  key={index}
-                  active={currentIndex === index}
-                  onClick={() => handleDotClick(index)}
+                  key={image}
+                  $active={currentIndex === index}
+                  onClick={() => setCurrentIndex(index)}
+                  aria-label={`Go to photo ${index + 1}`}
                 />
               ))}
             </Dots>
@@ -193,4 +199,4 @@ const ConferenceGallery = () => {
   );
 };
 
-export default ConferenceGallery; 
+export default ConferenceGallery;
