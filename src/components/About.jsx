@@ -19,9 +19,10 @@ const Content = styled.div`
 const Portrait = styled(motion.div)`
   width: 100%;
   aspect-ratio: 1;
-  border-radius: ${({ theme }) => theme.radii.lg};
   overflow: hidden;
-  border: 1px solid ${({ theme }) => theme.colors.hairline};
+  border: ${({ theme }) => theme.borders.thick} solid
+    ${({ theme }) => theme.colors.ink};
+  box-shadow: ${({ theme }) => theme.colors.shadowHard};
 
   @media (max-width: 768px) {
     max-width: 200px;
@@ -33,15 +34,16 @@ const AboutText = styled(motion.div)`
 
   p {
     font-size: 1.0625rem;
-    line-height: 1.75;
+    line-height: 1.65;
     color: ${({ theme }) => theme.colors.inkSecondary};
     margin-bottom: 1.35rem;
   }
 
-  /* Lead paragraph carries a little more weight */
+  /* Lead paragraph carries a lot more weight */
   p:first-child {
-    font-size: 1.25rem;
-    line-height: 1.6;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.35;
     color: ${({ theme }) => theme.colors.ink};
   }
 `;

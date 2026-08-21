@@ -10,13 +10,16 @@ const GalleryContainer = styled.div`
 const CarouselContainer = styled.div`
   position: relative;
   aspect-ratio: 21 / 9;
-  border-radius: ${({ theme }) => theme.radii.lg};
   overflow: hidden;
   background: ${({ theme }) => theme.colors.surfaceSunken};
-  border: 1px solid ${({ theme }) => theme.colors.hairline};
+  border: ${({ theme }) => theme.borders.thick} solid
+    ${({ theme }) => theme.colors.ink};
+  box-shadow: ${({ theme }) => theme.colors.shadowHardLg};
 
   @media (max-width: 768px) {
     aspect-ratio: 16 / 10;
+    border-width: ${({ theme }) => theme.borders.base};
+    box-shadow: ${({ theme }) => theme.colors.shadowHard};
   }
 `;
 
@@ -35,19 +38,18 @@ const NavigationButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.hairlineStrong};
+  background: ${({ theme }) => theme.colors.bg};
+  border: ${({ theme }) => theme.borders.base} solid
+    ${({ theme }) => theme.colors.ink};
   color: ${({ theme }) => theme.colors.ink};
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   line-height: 1;
-  box-shadow: ${({ theme }) => theme.colors.shadowMd};
   transition: background ${({ theme }) => theme.motion.fast},
     color ${({ theme }) => theme.motion.fast};
   z-index: 2;
@@ -55,7 +57,6 @@ const NavigationButton = styled.button`
   &:hover {
     background: ${({ theme }) => theme.colors.accent};
     color: ${({ theme }) => theme.colors.onAccent};
-    border-color: ${({ theme }) => theme.colors.accent};
   }
 
   &.prev {
@@ -67,9 +68,10 @@ const NavigationButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    width: 32px;
-    height: 32px;
-    font-size: 1.05rem;
+    width: 34px;
+    height: 34px;
+    font-size: 1.1rem;
+    border-width: ${({ theme }) => theme.borders.thin};
 
     &.prev {
       left: 0.6rem;
@@ -81,34 +83,35 @@ const NavigationButton = styled.button`
   }
 `;
 
+/*
+ * An opaque black bar in the corner, not a floating blurred pill. The colours
+ * here are literal rather than themed: this sits on top of a photograph, so it
+ * has to read the same in light and dark.
+ */
 const Dots = styled.div`
   position: absolute;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 0;
+  left: 0;
   display: flex;
-  gap: 0.4rem;
-  padding: 0.4rem 0.6rem;
-  border-radius: ${({ theme }) => theme.radii.pill};
-  background: ${({ theme }) => theme.colors.overlay};
-  backdrop-filter: blur(6px);
+  gap: 0.35rem;
+  padding: 0.6rem 0.75rem;
+  background: #0d0d0d;
+  border-top: ${({ theme }) => theme.borders.thin} solid #f4f1e6;
+  border-right: ${({ theme }) => theme.borders.thin} solid #f4f1e6;
   z-index: 2;
 `;
 
 const Dot = styled.button`
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+  width: 16px;
+  height: 8px;
   border: none;
   padding: 0;
   cursor: pointer;
-  background: ${(props) => (props.$active ? '#fff' : 'rgba(255, 255, 255, 0.42)')};
-  transition: background ${({ theme }) => theme.motion.fast},
-    transform ${({ theme }) => theme.motion.fast};
-  transform: ${(props) => (props.$active ? 'scale(1.25)' : 'scale(1)')};
+  background: ${(props) => (props.$active ? '#FFE800' : 'rgba(244, 241, 230, 0.4)')};
+  transition: background ${({ theme }) => theme.motion.fast};
 
   &:hover {
-    background: #fff;
+    background: #ffe800;
   }
 `;
 

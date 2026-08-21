@@ -11,10 +11,12 @@ const EducationItem = styled(motion.article)`
   grid-template-columns: 9rem minmax(0, 1fr);
   gap: 2rem;
   padding: 2.25rem 0;
-  border-top: 1px solid ${({ theme }) => theme.colors.hairline};
+  border-top: ${({ theme }) => theme.borders.base} solid
+    ${({ theme }) => theme.colors.ink};
 
   &:last-child {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.hairline};
+    border-bottom: ${({ theme }) => theme.borders.base} solid
+      ${({ theme }) => theme.colors.ink};
   }
 
   @media (max-width: 768px) {
@@ -26,11 +28,12 @@ const EducationItem = styled(motion.article)`
   .date {
     font-family: ${({ theme }) => theme.fonts.mono};
     font-size: var(--font-size-meta);
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.inkMuted};
-    padding-top: 0.4rem;
+    font-variant-numeric: tabular-nums;
+    color: ${({ theme }) => theme.colors.inkSecondary};
+    padding-top: 0.5rem;
 
     @media (max-width: 768px) {
       padding-top: 0;
@@ -39,52 +42,60 @@ const EducationItem = styled(motion.article)`
 
   .degree {
     font-family: ${({ theme }) => theme.fonts.display};
-    font-size: 1.625rem;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    font-size: 1.875rem;
+    font-weight: 900;
+    font-stretch: 100%;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
     color: ${({ theme }) => theme.colors.ink};
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.45rem;
 
     @media (max-width: 768px) {
-      font-size: 1.375rem;
+      font-size: 1.5rem;
     }
   }
 
   .university {
-    font-size: 0.9375rem;
+    font-family: ${({ theme }) => theme.fonts.mono};
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: ${({ theme }) => theme.colors.accentInk};
     margin-bottom: 1.25rem;
   }
 
   .honors {
     font-size: 0.9375rem;
+    font-weight: 500;
     color: ${({ theme }) => theme.colors.inkSecondary};
     margin-bottom: 1rem;
   }
 
-  /* Thesis sits in a quiet ochre-ruled aside */
+  /* Thesis sits in its own hard-bordered box */
   .thesis {
-    padding: 0.85rem 0 0.85rem 1.1rem;
-    border-left: 2px solid ${({ theme }) => theme.colors.ochre};
-    background: ${({ theme }) => theme.colors.ochreSoft};
-    border-radius: 0 ${({ theme }) => theme.radii.sm}
-      ${({ theme }) => theme.radii.sm} 0;
+    padding: 0.85rem 1rem;
+    border: ${({ theme }) => theme.borders.thin} solid
+      ${({ theme }) => theme.colors.ink};
+    background: ${({ theme }) => theme.colors.surface};
     margin-bottom: 1.25rem;
 
     .thesis-label {
       display: block;
       font-family: ${({ theme }) => theme.fonts.mono};
       font-size: var(--font-size-meta);
-      font-weight: 500;
+      font-weight: 700;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: ${({ theme }) => theme.colors.ochreInk};
+      color: ${({ theme }) => theme.colors.inkMuted};
       margin-bottom: 0.3rem;
     }
 
     .thesis-title {
       font-size: 0.9375rem;
-      line-height: 1.5;
+      font-weight: 700;
+      line-height: 1.4;
       color: ${({ theme }) => theme.colors.ink};
     }
   }
@@ -120,7 +131,7 @@ const educationData = [
 
 const Education = () => {
   return (
-    <Section id="education">
+    <Section id="education" $sunken>
       <SectionContent>
         <Title>Education</Title>
         <EducationContainer>

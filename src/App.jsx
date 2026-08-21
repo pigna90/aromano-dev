@@ -4,6 +4,7 @@ import GlobalStyles from './styles/GlobalStyles';
 import { ThemeProvider } from './styles/ThemeContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import Ticker from './components/Ticker';
 import CookieConsent from './components/CookieConsent';
 
 // Lazy load components that are not immediately visible
@@ -26,9 +27,11 @@ const SectionSkeleton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid ${({ theme }) => theme.colors.hairline};
+  border-top: ${({ theme }) => theme.borders.thick} solid
+    ${({ theme }) => theme.colors.hairline};
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: var(--font-size-meta);
+  font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.inkMuted};
@@ -42,6 +45,7 @@ function App() {
       <GlobalStyles />
       <Navbar />
       <Hero />
+      <Ticker />
       {sections.map((SectionComponent, index) => (
         <Suspense key={index} fallback={<SectionSkeleton>Loading</SectionSkeleton>}>
           <SectionComponent />

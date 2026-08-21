@@ -21,38 +21,40 @@ const Controls = styled.div`
   margin-bottom: 2.5rem;
 `;
 
-/** Hairline segmented control rather than a filled pill group. */
+/** Two hard blocks sharing a border. The selected one is filled, not tinted. */
 const Tabs = styled.div`
   display: inline-flex;
-  padding: 3px;
-  border: 1px solid ${({ theme }) => theme.colors.hairline};
-  border-radius: ${({ theme }) => theme.radii.md};
-  background: ${({ theme }) => theme.colors.bgAlt};
+  box-shadow: ${({ theme }) => theme.colors.shadowHardSm};
 `;
 
 const TabButton = styled.button`
   ${buttonReset}
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: 0.72rem;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 0.55rem 1.1rem;
-  border-radius: ${({ theme }) => theme.radii.sm};
-  background: ${({ theme, $active }) => ($active ? theme.colors.surface : 'transparent')};
+  padding: 0.6rem 1.1rem;
+  border: ${({ theme }) => theme.borders.base} solid
+    ${({ theme }) => theme.colors.ink};
+  background: ${({ theme, $active }) =>
+    $active ? theme.colors.accent : theme.colors.surface};
   color: ${({ theme, $active }) =>
-    $active ? theme.colors.ink : theme.colors.inkMuted};
-  box-shadow: ${({ theme, $active }) => ($active ? theme.colors.shadowSm : 'none')};
-  transition: color ${({ theme }) => theme.motion.fast},
-    background ${({ theme }) => theme.motion.fast};
+    $active ? theme.colors.onAccent : theme.colors.ink};
+  transition: background ${({ theme }) => theme.motion.fast};
+
+  & + & {
+    margin-left: -${({ theme }) => theme.borders.base};
+  }
 
   &:hover {
-    color: ${({ theme }) => theme.colors.ink};
+    background: ${({ theme, $active }) =>
+      $active ? theme.colors.accent : theme.colors.accentSoft};
   }
 
   .count {
-    color: ${({ theme }) => theme.colors.inkMuted};
-    margin-left: 0.45rem;
+    margin-left: 0.5rem;
+    font-variant-numeric: tabular-nums;
   }
 `;
 
@@ -63,24 +65,20 @@ const FilterToggle = styled.button`
   gap: 0.65rem;
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: 0.72rem;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: ${({ theme, $active }) =>
-    $active ? theme.colors.accentInk : theme.colors.inkMuted};
-  transition: color ${({ theme }) => theme.motion.fast};
+  color: ${({ theme }) => theme.colors.ink};
 
-  &:hover {
-    color: ${({ theme }) => theme.colors.ink};
-  }
-
+  /* A square knob sliding in a square track, both hard-edged. */
   .track {
     position: relative;
-    width: 34px;
-    height: 18px;
-    border-radius: ${({ theme }) => theme.radii.pill};
+    width: 38px;
+    height: 20px;
+    border: ${({ theme }) => theme.borders.thin} solid
+      ${({ theme }) => theme.colors.ink};
     background: ${({ theme, $active }) =>
-      $active ? theme.colors.accent : theme.colors.hairlineStrong};
+      $active ? theme.colors.accentAlt : theme.colors.surface};
     transition: background ${({ theme }) => theme.motion.fast};
 
     &::after {
@@ -89,53 +87,55 @@ const FilterToggle = styled.button`
       top: 2px;
       left: ${({ $active }) => ($active ? '18px' : '2px')};
       width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: ${({ theme }) => theme.colors.surface};
+      height: 12px;
+      background: ${({ theme }) => theme.colors.ink};
       transition: left ${({ theme }) => theme.motion.fast};
     }
   }
 `;
 
 const ConferenceList = styled.div`
-  border-top: 1px solid ${({ theme }) => theme.colors.hairline};
+  border-top: ${({ theme }) => theme.borders.base} solid
+    ${({ theme }) => theme.colors.ink};
 `;
 
 /**
- * One talk per row: mono date rail on the left, content on the right, hairline
- * separators. Rows are only clickable when there's somewhere to go.
+ * One talk per row: mono date rail on the left, content on the right, thick
+ * rules between. Rows are only clickable when there's somewhere to go, and a
+ * clickable row fills with the pale accent instead of shifting a shade.
  */
 const ConferenceItem = styled(motion.article)`
   display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr) auto;
+  grid-template-columns: 8rem minmax(0, 1fr) auto;
   gap: 1.75rem;
   align-items: start;
-  padding: 1.5rem 0.75rem;
+  padding: 1.4rem 0.75rem;
   margin: 0 -0.75rem;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.hairline};
-  border-radius: ${({ theme }) => theme.radii.md};
+  border-bottom: ${({ theme }) => theme.borders.thin} solid
+    ${({ theme }) => theme.colors.ink};
   cursor: ${({ $clickable }) => ($clickable ? 'pointer' : 'default')};
   transition: background ${({ theme }) => theme.motion.fast};
 
   &:hover {
     background: ${({ theme, $clickable }) =>
-      $clickable ? theme.colors.bgAlt : 'transparent'};
+      $clickable ? theme.colors.accentSoft : 'transparent'};
   }
 
   @media (max-width: 768px) {
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.75rem 1rem;
-    padding: 1.25rem 0.6rem;
+    gap: 0.6rem 1rem;
+    padding: 1.15rem 0.6rem;
   }
 
   .date {
     font-family: ${({ theme }) => theme.fonts.mono};
     font-size: var(--font-size-meta);
-    font-weight: 500;
-    letter-spacing: 0.12em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.inkMuted};
-    padding-top: 0.35rem;
+    font-variant-numeric: tabular-nums;
+    color: ${({ theme }) => theme.colors.inkSecondary};
+    padding-top: 0.3rem;
     white-space: nowrap;
 
     @media (max-width: 768px) {
@@ -146,23 +146,26 @@ const ConferenceItem = styled(motion.article)`
   }
 
   .upcoming-marker {
-    color: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.accentInk};
   }
 
   h3 {
     font-family: ${({ theme }) => theme.fonts.display};
-    font-size: 1.375rem;
-    font-weight: 400;
-    line-height: 1.2;
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-stretch: 100%;
+    line-height: 1.05;
     letter-spacing: -0.02em;
+    text-transform: uppercase;
     color: ${({ theme }) => theme.colors.ink};
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.35rem;
   }
 
   .topic {
     font-size: 0.9375rem;
-    line-height: 1.5;
-    color: ${({ theme }) => theme.colors.accentInk};
+    font-weight: 500;
+    line-height: 1.45;
+    color: ${({ theme }) => theme.colors.inkSecondary};
     margin-bottom: 0.5rem;
   }
 
@@ -172,6 +175,7 @@ const ConferenceItem = styled(motion.article)`
     gap: 0.4rem;
     font-family: ${({ theme }) => theme.fonts.mono};
     font-size: var(--font-size-meta);
+    font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: ${({ theme }) => theme.colors.inkMuted};
@@ -183,20 +187,20 @@ const VideoButton = styled.a`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+  width: 38px;
+  height: 34px;
   font-size: 0.7rem;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.accentInk};
-  background: ${({ theme }) => theme.colors.accentSoft};
-  border: 1px solid ${({ theme }) => theme.colors.accentBorder};
+  color: ${({ theme }) => theme.colors.ink};
+  background: ${({ theme }) => theme.colors.surface};
+  border: ${({ theme }) => theme.borders.thin} solid
+    ${({ theme }) => theme.colors.ink};
   transition: background ${({ theme }) => theme.motion.fast},
     color ${({ theme }) => theme.motion.fast};
 
   &:hover {
-    background: ${({ theme }) => theme.colors.accent};
-    color: ${({ theme }) => theme.colors.onAccent};
+    background: ${({ theme }) => theme.colors.accentAlt};
+    color: ${({ theme }) => theme.colors.onAccentAlt};
   }
 `;
 
@@ -209,13 +213,16 @@ const YearHeader = styled.div`
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  padding-bottom: 0.75rem;
+  padding-bottom: 0.6rem;
 
+  /* The year is set big: it is the only landmark in a long list of rows. */
   h3 {
-    font-family: ${({ theme }) => theme.fonts.mono};
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
+    font-family: ${({ theme }) => theme.fonts.display};
+    font-size: 2rem;
+    font-weight: 900;
+    font-stretch: 112%;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
     color: ${({ theme }) => theme.colors.ink};
     margin: 0;
   }
@@ -225,25 +232,33 @@ const ShowMoreButton = styled.button`
   ${buttonReset}
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: var(--font-size-meta);
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.accentInk};
+  color: ${({ theme }) => theme.colors.ink};
+  padding: 0.4rem 0.65rem;
+  border: ${({ theme }) => theme.borders.thin} solid
+    ${({ theme }) => theme.colors.ink};
+  transition: background ${({ theme }) => theme.motion.fast},
+    color ${({ theme }) => theme.motion.fast};
 
   &:hover {
-    color: ${({ theme }) => theme.colors.accent};
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
+    background: ${({ theme }) => theme.colors.ink};
+    color: ${({ theme }) => theme.colors.bg};
   }
 `;
 
 const EmptyState = styled.p`
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: var(--font-size-meta);
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.inkMuted};
-  padding: 2rem 0;
+  color: ${({ theme }) => theme.colors.ink};
+  padding: 1.5rem;
+  border: ${({ theme }) => theme.borders.base} solid
+    ${({ theme }) => theme.colors.ink};
+  background: ${({ theme }) => theme.colors.surface};
 `;
 
 const COLLAPSED_PER_YEAR = 3;
@@ -301,7 +316,7 @@ const Conferences = () => {
         onClick={clickable ? () => openLink(conf.info_link) : undefined}
       >
         <div className="date">
-          {upcoming && <span className="upcoming-marker">● </span>}
+          {upcoming && <span className="upcoming-marker">▪ </span>}
           {formatDate(conf.date)}
         </div>
 
@@ -333,7 +348,7 @@ const Conferences = () => {
   };
 
   return (
-    <Section id="conferences">
+    <Section id="conferences" $sunken>
       <SectionContent>
         <Title>Speaking</Title>
 

@@ -2,9 +2,12 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { socialLinks } from '../data/socialLinks';
 
+/* The page ends on a fully inverted slab. */
 const FooterContainer = styled.footer`
-  background: ${({ theme }) => theme.colors.bgAlt};
-  border-top: 1px solid ${({ theme }) => theme.colors.hairline};
+  background: ${({ theme }) => theme.colors.ink};
+  color: ${({ theme }) => theme.colors.bg};
+  border-top: ${({ theme }) => theme.borders.thick} solid
+    ${({ theme }) => theme.colors.ink};
   padding: 3rem ${({ theme }) => theme.layout.gutter};
 
   @media (max-width: 768px) {
@@ -29,8 +32,10 @@ const FooterContent = styled.div`
 const Legal = styled.div`
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: 0.6875rem;
-  letter-spacing: 0.08em;
-  color: ${({ theme }) => theme.colors.inkMuted};
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.bg};
   line-height: 1.9;
 
   p {
@@ -41,8 +46,8 @@ const Legal = styled.div`
 const SocialLinks = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  margin-right: -0.5rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 
   a {
     display: inline-flex;
@@ -50,15 +55,17 @@ const SocialLinks = styled.div`
     justify-content: center;
     width: 38px;
     height: 38px;
-    border-radius: ${({ theme }) => theme.radii.md};
-    color: ${({ theme }) => theme.colors.inkSecondary};
+    border: ${({ theme }) => theme.borders.thin} solid
+      ${({ theme }) => theme.colors.bg};
+    color: ${({ theme }) => theme.colors.bg};
     font-size: 1.05rem;
     transition: color ${({ theme }) => theme.motion.fast},
       background ${({ theme }) => theme.motion.fast};
 
     &:hover {
-      color: ${({ theme }) => theme.colors.accentInk};
-      background: ${({ theme }) => theme.colors.accentSoft};
+      background: ${({ theme }) => theme.colors.accent};
+      border-color: ${({ theme }) => theme.colors.accent};
+      color: ${({ theme }) => theme.colors.onAccent};
     }
   }
 `;

@@ -20,9 +20,12 @@ const Cover = styled.div`
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: ${({ theme }) => theme.colors.bgAlt};
-  border: 1px solid ${({ theme }) => theme.colors.hairline};
-  border-radius: ${({ theme }) => theme.radii.lg};
+  /* Stays a light panel in both modes: the cover art is teal and orange on
+     transparent, and it needs a pale field behind it to read. */
+  background: #ffffff;
+  border: ${({ theme }) => theme.borders.thick} solid
+    ${({ theme }) => theme.colors.ink};
+  box-shadow: ${({ theme }) => theme.colors.shadowHard};
 
   img {
     width: 100%;
@@ -41,7 +44,8 @@ const PodcastContent = styled.div`
 
 const PodcastDescription = styled.p`
   font-size: 1.125rem;
-  line-height: 1.7;
+  font-weight: 500;
+  line-height: 1.55;
   color: ${({ theme }) => theme.colors.inkSecondary};
   margin: 0.75rem 0 2rem;
 `;

@@ -33,9 +33,8 @@ const BlogCard = styled(motion.a)`
   flex-direction: column;
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.accentBorder};
-    transform: translateY(-2px);
-    box-shadow: ${({ theme }) => theme.colors.shadowMd};
+    transform: translate(-3px, -3px);
+    box-shadow: ${({ theme }) => theme.colors.shadowHardLg};
   }
 `;
 
@@ -44,7 +43,8 @@ const BlogImage = styled.div`
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: ${({ theme }) => theme.colors.surfaceSunken};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.hairline};
+  border-bottom: ${({ theme }) => theme.borders.base} solid
+    ${({ theme }) => theme.colors.ink};
 
   img {
     width: 100%;
@@ -71,18 +71,21 @@ const BlogContent = styled.div`
     gap: 0.55rem;
     font-family: ${({ theme }) => theme.fonts.mono};
     font-size: var(--font-size-meta);
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.inkMuted};
+    color: ${({ theme }) => theme.colors.inkSecondary};
     margin-bottom: 0.9rem;
   }
 
+  /* The platform is a filled chip, so the two feeds are told apart at a glance */
   .source {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    color: ${({ theme }) => theme.colors.accent};
+    padding: 0.2rem 0.4rem;
+    background: ${({ theme }) => theme.colors.ink};
+    color: ${({ theme }) => theme.colors.bg};
   }
 
   .source-icon {
@@ -90,24 +93,22 @@ const BlogContent = styled.div`
     height: 12px;
   }
 
-  .separator {
-    color: ${({ theme }) => theme.colors.hairlineStrong};
-  }
-
   h3 {
     font-family: ${({ theme }) => theme.fonts.display};
     font-size: 1.375rem;
-    font-weight: 400;
-    line-height: 1.2;
+    font-weight: 800;
+    font-stretch: 100%;
+    line-height: 1.08;
     letter-spacing: -0.02em;
+    text-transform: uppercase;
     color: ${({ theme }) => theme.colors.ink};
     margin-bottom: 0.6rem;
   }
 
   .description {
-    color: ${({ theme }) => theme.colors.inkMuted};
+    color: ${({ theme }) => theme.colors.inkSecondary};
     font-size: 0.9375rem;
-    line-height: 1.55;
+    line-height: 1.5;
     margin-bottom: 0;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -123,6 +124,7 @@ const LoadingState = styled.div`
   min-height: 120px;
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: var(--font-size-meta);
+  font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.inkMuted};
@@ -180,7 +182,7 @@ const Blog = () => {
   };
 
   return (
-    <Section id="blog">
+    <Section id="blog" $sunken>
       <SectionContent>
         <Title>Writing</Title>
         {loading ? (
@@ -215,7 +217,6 @@ const Blog = () => {
                           {renderPlatformIcon(post.source)}
                           {post.source}
                         </span>
-                        <span className="separator">/</span>
                         <span>{post.date}</span>
                       </div>
                       <h3>{post.title}</h3>

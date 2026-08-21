@@ -11,9 +11,9 @@ const CookieBanner = styled(motion.div)`
   max-width: 620px;
   margin: 0 auto;
   background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.hairlineStrong};
-  border-radius: ${({ theme }) => theme.radii.lg};
-  box-shadow: ${({ theme }) => theme.colors.shadowLg};
+  border: ${({ theme }) => theme.borders.thick} solid
+    ${({ theme }) => theme.colors.ink};
+  box-shadow: ${({ theme }) => theme.colors.shadowHard};
   color: ${({ theme }) => theme.colors.ink};
   padding: 1.25rem 1.5rem;
   z-index: 1100;
@@ -32,7 +32,8 @@ const CookieBanner = styled(motion.div)`
 const CookieText = styled.p`
   margin: 0;
   font-size: 0.875rem;
-  line-height: 1.6;
+  font-weight: 500;
+  line-height: 1.5;
   color: ${({ theme }) => theme.colors.inkSecondary};
 `;
 
@@ -82,7 +83,7 @@ const CookieConsent = () => {
           initial={{ y: 120, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 120, opacity: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          transition={{ duration: 0.18, ease: [0.2, 0, 0, 1] }}
         >
           <CookieText>
             I use cookies to understand how the site is used. Analytics only.

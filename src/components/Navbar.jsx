@@ -12,6 +12,10 @@ import {
 import { buttonReset } from '../styles/SharedStyles';
 import { useColorScheme } from '../styles/colorScheme';
 
+/*
+ * Opaque and flat. A translucent blurred bar is the opposite of what this
+ * direction is after, so the nav is a solid slab with a thick rule under it.
+ */
 const Nav = styled.nav`
   position: fixed;
   top: 0;
@@ -19,16 +23,15 @@ const Nav = styled.nav`
   height: var(--nav-height);
   display: flex;
   align-items: center;
-  background: ${({ theme }) =>
-    theme.name === 'dark' ? 'rgba(15, 18, 22, 0.72)' : 'rgba(253, 252, 250, 0.72)'};
-  backdrop-filter: saturate(180%) blur(14px);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
-  border-bottom: 1px solid ${({ theme }) => theme.colors.hairline};
+  background: ${({ theme }) => theme.colors.bg};
+  border-bottom: ${({ theme }) => theme.borders.thick} solid
+    ${({ theme }) => theme.colors.ink};
   z-index: 1000;
   padding: 0 ${({ theme }) => theme.layout.gutter};
 
   @media (max-width: 768px) {
     padding: 0 ${({ theme }) => theme.layout.gutterMobile};
+    border-bottom-width: ${({ theme }) => theme.borders.base};
   }
 `;
 
@@ -42,17 +45,30 @@ const NavContent = styled.div`
   gap: 1rem;
 `;
 
+/* Monogram as a filled block. The full name is in the hero at 9rem already. */
 const Logo = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  height: 34px;
+  padding: 0 0.5rem;
   font-family: ${({ theme }) => theme.fonts.display};
-  font-size: 1.375rem;
-  letter-spacing: -0.02em;
+  font-size: 1.125rem;
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: 0.02em;
   white-space: nowrap;
-  color: ${({ theme }) => theme.colors.ink};
+  background: ${({ theme }) => theme.colors.ink};
+  color: ${({ theme }) => theme.colors.bg};
   text-decoration: none;
   cursor: pointer;
+  transition: background ${({ theme }) => theme.motion.fast},
+    color ${({ theme }) => theme.motion.fast};
 
-  @media (max-width: 768px) {
-    font-size: 1.1875rem;
+  &:hover {
+    background: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.onAccent};
   }
 `;
 
@@ -88,7 +104,8 @@ const NavLinks = styled.ul`
     left: 0;
     right: 0;
     background: ${({ theme }) => theme.colors.bg};
-    border-bottom: 1px solid ${({ theme }) => theme.colors.hairline};
+    border-bottom: ${({ theme }) => theme.borders.base} solid
+      ${({ theme }) => theme.colors.ink};
     flex-direction: column;
     align-items: stretch;
     padding: 0.75rem ${({ theme }) => theme.layout.gutterMobile} 1.25rem;
@@ -101,30 +118,33 @@ const NavLinks = styled.ul`
 const NavLink = styled(Link)`
   display: block;
   font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.inkSecondary};
-  padding: 0.5rem 0.7rem;
-  border-radius: ${({ theme }) => theme.radii.sm};
+  color: ${({ theme }) => theme.colors.ink};
+  padding: 0.45rem 0.6rem;
+  border: ${({ theme }) => theme.borders.thin} solid transparent;
   cursor: pointer;
   transition: color ${({ theme }) => theme.motion.fast},
-    background ${({ theme }) => theme.motion.fast};
+    background ${({ theme }) => theme.motion.fast},
+    border-color ${({ theme }) => theme.motion.fast};
 
   &:hover {
-    color: ${({ theme }) => theme.colors.ink};
-    background: ${({ theme }) => theme.colors.accentSoft};
+    border-color: ${({ theme }) => theme.colors.ink};
   }
 
+  /* The current section is a filled block, not a colour change. */
   &.active {
-    color: ${({ theme }) => theme.colors.accentInk};
+    background: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.onAccent};
+    border-color: ${({ theme }) => theme.colors.ink};
   }
 
   @media (max-width: 768px) {
     font-size: 0.8125rem;
-    padding: 0.7rem 0.6rem;
+    padding: 0.65rem 0.6rem;
   }
 `;
 
@@ -132,16 +152,16 @@ const iconButton = ({ theme }) => `
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: ${theme.radii.md};
-  color: ${theme.colors.inkSecondary};
-  font-size: 0.95rem;
+  width: 36px;
+  height: 34px;
+  border: ${theme.borders.thin} solid ${theme.colors.ink};
+  color: ${theme.colors.ink};
+  font-size: 0.9rem;
   transition: color ${theme.motion.fast}, background ${theme.motion.fast};
 
   &:hover {
-    color: ${theme.colors.accentInk};
-    background: ${theme.colors.accentSoft};
+    background: ${theme.colors.accentAlt};
+    color: ${theme.colors.onAccentAlt};
   }
 `;
 
@@ -170,19 +190,18 @@ const DropdownButton = styled.button`
   align-items: center;
   gap: 0.45rem;
   font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.inkSecondary};
-  padding: 0.5rem 0.7rem;
-  border-radius: ${({ theme }) => theme.radii.sm};
-  transition: color ${({ theme }) => theme.motion.fast},
-    background ${({ theme }) => theme.motion.fast};
+  color: ${({ theme }) => theme.colors.ink};
+  padding: 0.45rem 0.6rem;
+  border: ${({ theme }) => theme.borders.thin} solid transparent;
+  transition: background ${({ theme }) => theme.motion.fast},
+    border-color ${({ theme }) => theme.motion.fast};
 
   &:hover {
-    color: ${({ theme }) => theme.colors.ink};
-    background: ${({ theme }) => theme.colors.accentSoft};
+    border-color: ${({ theme }) => theme.colors.ink};
   }
 
   .icon {
@@ -198,9 +217,9 @@ const DropdownContent = styled.div`
   right: 0;
   min-width: 190px;
   background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.hairline};
-  border-radius: ${({ theme }) => theme.radii.md};
-  box-shadow: ${({ theme }) => theme.colors.shadowLg};
+  border: ${({ theme }) => theme.borders.base} solid
+    ${({ theme }) => theme.colors.ink};
+  box-shadow: ${({ theme }) => theme.colors.shadowHard};
   padding: 0.4rem;
   opacity: ${(props) => (props.$isOpen ? '1' : '0')};
   visibility: ${(props) => (props.$isOpen ? 'visible' : 'hidden')};
@@ -228,7 +247,7 @@ const moreSections = [
 const scrollProps = {
   spy: true,
   smooth: true,
-  offset: -64,
+  offset: -72,
   duration: 500,
   activeClass: 'active',
 };
@@ -258,8 +277,8 @@ const Navbar = () => {
   return (
     <Nav>
       <NavContent>
-        <Logo to="hero" smooth duration={500}>
-          Alessandro Romano
+        <Logo to="hero" smooth duration={500} aria-label="Alessandro Romano">
+          AR
         </Logo>
 
         <Right>

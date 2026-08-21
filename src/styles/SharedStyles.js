@@ -1,18 +1,21 @@
 import styled, { css } from 'styled-components';
 
 /**
- * One continuous paper surface, sections separated by hairlines rather than
- * alternating background bands.
+ * Sections are hard bands stacked on top of each other, divided by a thick
+ * rule rather than a hairline. `$sunken` swaps in the darker paper so the page
+ * alternates instead of running as one continuous field.
  */
 export const Section = styled.section`
   width: 100%;
   padding: 6rem ${({ theme }) => theme.layout.gutter};
   background-color: ${({ theme, $sunken }) =>
-    $sunken ? theme.colors.bgAlt : 'transparent'};
-  border-top: 1px solid ${({ theme }) => theme.colors.hairline};
+    $sunken ? theme.colors.bgAlt : theme.colors.bg};
+  border-top: ${({ theme }) => theme.borders.thick} solid
+    ${({ theme }) => theme.colors.hairline};
 
   @media (max-width: 768px) {
-    padding: 3.75rem ${({ theme }) => theme.layout.gutterMobile};
+    padding: 3.5rem ${({ theme }) => theme.layout.gutterMobile};
+    border-top-width: ${({ theme }) => theme.borders.base};
   }
 `;
 
@@ -23,86 +26,110 @@ export const SectionContent = styled.div`
 `;
 
 /**
- * Section heading. The small indigo "01" above it is generated from a CSS
- * counter on #root, so sections stay numbered in DOM order with no props.
+ * Section heading: oversized, uppercase, set wide. The "01" is a CSS counter
+ * on #root rendered as a solid block of accent, so sections stay numbered in
+ * DOM order with no props to thread.
  */
 export const Title = styled.h2`
   font-family: ${({ theme }) => theme.fonts.display};
   font-size: var(--font-size-h2);
-  font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  font-weight: var(--display-weight);
+  font-stretch: var(--display-stretch);
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
   text-align: left;
   color: ${({ theme }) => theme.colors.ink};
-  margin-bottom: 2.75rem;
+  margin-bottom: 2.5rem;
 
   &::before {
     counter-increment: section;
     content: counter(section, decimal-leading-zero);
     display: block;
+    /* Block so it sits above the heading, fit-content so the fill hugs the
+       digits instead of spanning the column. */
+    width: fit-content;
     font-family: ${({ theme }) => theme.fonts.mono};
     font-size: var(--font-size-meta);
-    font-weight: 500;
+    font-weight: 700;
+    font-stretch: 100%;
     letter-spacing: 0.22em;
-    color: ${({ theme }) => theme.colors.accent};
-    margin-bottom: 0.85rem;
+    text-indent: 0.22em;
+    line-height: 1;
+    padding: 0.4rem 0.55rem;
+    margin-bottom: 1rem;
+    background: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.onAccent};
+    border: ${({ theme }) => theme.borders.thin} solid
+      ${({ theme }) => theme.colors.ink};
   }
 
   @media (max-width: 768px) {
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
   }
 `;
 
 /** Optional standfirst under a Title. */
 export const Lead = styled.p`
   max-width: ${({ theme }) => theme.layout.readWidth};
-  margin-top: -1.75rem;
-  margin-bottom: 2.75rem;
+  margin-top: -1.5rem;
+  margin-bottom: 2.5rem;
   font-size: 1.125rem;
-  color: ${({ theme }) => theme.colors.inkMuted};
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.inkSecondary};
 `;
 
 /** Mono, uppercase, letterspaced: dates, locations, labels. */
 export const Meta = styled.span`
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: var(--font-size-meta);
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.inkMuted};
+  font-variant-numeric: tabular-nums;
+  color: ${({ theme }) => theme.colors.inkSecondary};
   line-height: 1.4;
 `;
 
+/**
+ * Every panel on the site: thick ink border, no radius, and a hard offset
+ * block of ink standing in for a drop shadow. Depth in this direction is a
+ * second solid rectangle, never a blur.
+ */
 export const cardSurface = css`
   background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.hairline};
-  border-radius: ${({ theme }) => theme.radii.lg};
-  transition: border-color ${({ theme }) => theme.motion.base},
-    transform ${({ theme }) => theme.motion.base},
-    box-shadow ${({ theme }) => theme.motion.base};
+  border: ${({ theme }) => theme.borders.base} solid
+    ${({ theme }) => theme.colors.hairline};
+  border-radius: 0;
+  box-shadow: ${({ theme }) => theme.colors.shadowHardSm};
+  transition: transform ${({ theme }) => theme.motion.base},
+    box-shadow ${({ theme }) => theme.motion.base},
+    background ${({ theme }) => theme.motion.base};
 `;
 
-/** Hairline card: no drop shadow at rest, a small lift on hover. */
+/** Card that lifts away from its shadow on hover. */
 export const Card = styled.div`
   ${cardSurface}
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.hairlineStrong};
-    transform: translateY(-2px);
-    box-shadow: ${({ theme }) => theme.colors.shadowMd};
+    transform: translate(-2px, -2px);
+    box-shadow: ${({ theme }) => theme.colors.shadowHard};
   }
 `;
 
-/** Small pill for tags, courses, responsibilities. */
+/** Filled block for tags, courses, responsibilities. */
 export const Tag = styled.span`
   font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 0.75rem;
-  letter-spacing: 0.02em;
-  color: ${({ theme }) => theme.colors.inkSecondary};
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.ink};
   background: ${({ theme }) => theme.colors.bgAlt};
-  border: 1px solid ${({ theme }) => theme.colors.hairline};
-  border-radius: ${({ theme }) => theme.radii.pill};
-  padding: 0.3rem 0.7rem;
+  border: ${({ theme }) => theme.borders.thin} solid
+    ${({ theme }) => theme.colors.ink};
+  border-radius: 0;
+  padding: 0.3rem 0.6rem;
   white-space: nowrap;
 `;
 
@@ -114,52 +141,63 @@ export const buttonReset = css`
   color: inherit;
 `;
 
+/**
+ * The one gesture used by every button here: it sits on a hard offset block
+ * and, on hover, slides down into it so the shadow disappears. Reads as a
+ * physical press with no easing tricks.
+ */
+export const hardPress = css`
+  box-shadow: ${({ theme }) => theme.colors.shadowHardSm};
+  transition: transform ${({ theme }) => theme.motion.fast},
+    box-shadow ${({ theme }) => theme.motion.fast},
+    background ${({ theme }) => theme.motion.fast},
+    color ${({ theme }) => theme.motion.fast};
+
+  &:hover:not(:disabled) {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 transparent;
+  }
+
+  &:active:not(:disabled) {
+    transform: translate(3px, 3px);
+  }
+`;
+
 /** Solid accent button. */
 export const Button = styled.button`
   ${buttonReset}
+  ${hardPress}
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
   padding: 0.9rem 1.5rem;
-  border-radius: ${({ theme }) => theme.radii.md};
+  border: ${({ theme }) => theme.borders.base} solid
+    ${({ theme }) => theme.colors.ink};
+  border-radius: 0;
   background: ${({ theme }) => theme.colors.accent};
   color: ${({ theme }) => theme.colors.onAccent};
-  transition: background ${({ theme }) => theme.motion.fast},
-    transform ${({ theme }) => theme.motion.fast},
-    opacity ${({ theme }) => theme.motion.fast};
-
-  &:hover:not(:disabled) {
-    background: ${({ theme }) => theme.colors.accentInk};
-    transform: translateY(-1px);
-  }
-
-  &:active:not(:disabled) {
-    transform: translateY(0);
-  }
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
   }
 `;
 
-/** Outlined counterpart to Button. */
+/** Unfilled counterpart to Button, same press. */
 export const GhostButton = styled(Button)`
-  background: transparent;
+  background: ${({ theme }) => theme.colors.surface};
   color: ${({ theme }) => theme.colors.ink};
-  border: 1px solid ${({ theme }) => theme.colors.hairlineStrong};
 
   &:hover:not(:disabled) {
-    background: ${({ theme }) => theme.colors.accentSoft};
-    border-color: ${({ theme }) => theme.colors.accentBorder};
-    color: ${({ theme }) => theme.colors.accentInk};
+    background: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.onAccent};
   }
 `;
 
@@ -170,14 +208,24 @@ export const ArrowLink = styled.a`
   gap: 0.5rem;
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: 0.78rem;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
+  padding: 0.2rem 0.35rem;
+  margin-left: -0.35rem;
   color: ${({ theme }) => theme.colors.accentInk};
+  transition: background ${({ theme }) => theme.motion.fast},
+    color ${({ theme }) => theme.motion.fast};
 
   &::after {
     content: '→';
     transition: transform ${({ theme }) => theme.motion.fast};
+  }
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.accentInk};
+    color: ${({ theme }) => theme.colors.onAccentInk};
   }
 
   &:hover::after {

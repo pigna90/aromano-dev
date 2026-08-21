@@ -1,83 +1,132 @@
 /**
- * Design tokens.
+ * Design tokens: bold brutalist.
  *
  * Every colour, font, radius and spacing step in the site comes from here.
  * Components should never hardcode a hex value. Reach for `theme.colors.*`
  * so light and dark stay in sync.
+ *
+ * The rules this direction follows:
+ *   - Type is the loudest thing on the page. Heavy, wide, uppercase, huge.
+ *   - Borders are thick and black (thick and bone-white in dark mode). No
+ *     hairlines, no soft separators.
+ *   - Depth comes from hard offset shadows, never from blur or gradient.
+ *   - Colour arrives in flat saturated blocks. Three of them, not one.
+ *   - Nothing is rounded and nothing fades. Transitions are short and abrupt.
+ *
+ * Colour rule worth knowing before editing: `accent` (yellow) and `accentAlt`
+ * (orange) are FILL-ONLY. Neither has the contrast to be used as text against
+ * the page. `accentInk` is the text-safe accent: blue in light, yellow in
+ * dark. Every value below was hand-checked for WCAG AA.
  */
 
+// Archivo Variable carries a width axis as well as weight, which is what lets
+// the display type go heavy AND wide. Space Mono handles every label, date and
+// counter.
+const archivo =
+  "'Archivo Variable', Archivo, Helvetica, -apple-system, BlinkMacSystemFont, Arial, sans-serif";
+const spaceMono = "'Space Mono', 'JetBrains Mono Variable', ui-monospace, monospace";
+
 const fonts = {
-  display: "'Instrument Serif', 'Iowan Old Style', Georgia, 'Times New Roman', serif",
-  body: "'Inter Variable', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-  mono: "'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace",
+  display: archivo,
+  body: archivo,
+  mono: spaceMono,
 };
 
+// Square. Every corner, no exceptions.
 const radii = {
-  sm: '4px',
-  md: '8px',
-  lg: '14px',
-  xl: '20px',
-  pill: '999px',
+  sm: '0',
+  md: '0',
+  lg: '0',
+  xl: '0',
+  pill: '0',
+};
+
+// Borders are structural here, so they get their own scale.
+const borders = {
+  thin: '2px',
+  base: '3px',
+  thick: '5px',
+  slab: '8px',
 };
 
 const layout = {
-  maxWidth: '1120px',
-  readWidth: '760px',
-  gutter: '1.5rem',
-  gutterMobile: '1.25rem',
+  maxWidth: '1320px',
+  readWidth: '620px',
+  gutter: '2rem',
+  gutterMobile: '1rem',
 };
 
+// Short and abrupt. Nothing eases gently in this direction.
 const motionTokens = {
-  fast: '160ms cubic-bezier(0.2, 0, 0, 1)',
-  base: '260ms cubic-bezier(0.2, 0, 0, 1)',
-  slow: '420ms cubic-bezier(0.2, 0, 0, 1)',
+  fast: '80ms cubic-bezier(0.2, 0, 0, 1)',
+  base: '140ms cubic-bezier(0.2, 0, 0, 1)',
+  slow: '240ms cubic-bezier(0.2, 0, 0, 1)',
 };
 
-const shared = { fonts, radii, layout, motion: motionTokens };
+const shared = { fonts, radii, borders, layout, motion: motionTokens };
 
 export const lightTheme = {
   ...shared,
   name: 'light',
   colors: {
-    // Surfaces: warm paper, not clinical white
-    bg: '#FDFCFA',
-    bgAlt: '#F6F4EF',
+    // Surfaces: warm newsprint, deliberately not white
+    bg: '#F4F1E6',
+    bgAlt: '#E8E2CE',
     surface: '#FFFFFF',
-    surfaceSunken: '#F1EEE8',
+    surfaceSunken: '#EDE8D6',
 
-    // Text: checked against `bg` for WCAG AA
-    ink: '#14181C',
-    inkSecondary: '#39424B',
-    inkMuted: '#626C77',
+    // Text, all checked against `bg`
+    ink: '#0D0D0D', //          17.2:1
+    inkSecondary: '#2E2E2E', // 12.0:1
+    inkMuted: '#5A564A', //      6.5:1
 
-    // Lines
-    hairline: '#E5E1D9',
-    hairlineStrong: '#D2CCC1',
+    /*
+     * "Hairline" is a misnomer in this direction: separators are the same
+     * black as the text and 2px or thicker. The names are kept so components
+     * stay portable between design directions.
+     */
+    hairline: '#0D0D0D',
+    hairlineStrong: '#0D0D0D',
 
-    // Primary accent
-    accent: '#5B4BE1',
-    accentInk: '#4A3BC8',
-    accentSoft: 'rgba(91, 75, 225, 0.09)',
-    accentBorder: 'rgba(91, 75, 225, 0.32)',
-    onAccent: '#FFFFFF',
+    // Fill-only accents. Never set type in these on `bg`.
+    accent: '#FFE800', //        black on it: 15.5:1
+    accentAlt: '#FF4D19', //     black on it:  5.9:1
+    accentSoft: '#FFF7A8',
+    accentBorder: '#0D0D0D',
+    onAccent: '#0D0D0D',
+    onAccentAlt: '#0D0D0D',
 
-    // Secondary accent, tags and highlights only
-    ochre: '#B4762B',
-    ochreInk: '#8A5716',
-    ochreSoft: 'rgba(180, 118, 43, 0.10)',
+    // The text-safe accent: links, active states, anything set in type.
+    accentInk: '#1B2FE8', //     7.1:1 on bg, white on it 8.0:1
+    onAccentInk: '#FFFFFF',
+
+    /*
+     * No ochre here. These alias onto the orange and the muted ink so
+     * components written for the editorial theme (the thesis aside in
+     * Education, for one) still read correctly instead of breaking.
+     */
+    ochre: '#FF4D19',
+    ochreInk: '#5A564A',
+    ochreSoft: '#FFE0D4',
 
     // Feedback
-    success: '#1C7A47',
-    successSoft: 'rgba(28, 122, 71, 0.10)',
-    danger: '#B3261E',
-    dangerSoft: 'rgba(179, 38, 30, 0.10)',
+    success: '#0F7A3D',
+    successSoft: '#C8ECD6',
+    danger: '#C41E00', //        5.3:1
+    dangerSoft: '#FFD9CE',
 
-    // Effects
-    dot: 'rgba(20, 24, 28, 0.14)',
-    overlay: 'rgba(20, 24, 28, 0.55)',
-    shadowSm: '0 1px 2px rgba(20, 24, 28, 0.05)',
-    shadowMd: '0 8px 24px -12px rgba(20, 24, 28, 0.18)',
-    shadowLg: '0 20px 48px -20px rgba(20, 24, 28, 0.24)',
+    /*
+     * Depth is a hard offset block of ink, never a blur. The legacy shadow
+     * names map onto the same idea so nothing renders soft by accident.
+     */
+    dot: '#0D0D0D',
+    overlay: 'rgba(13, 13, 13, 0.82)',
+    shadowHardSm: '3px 3px 0 #0D0D0D',
+    shadowHard: '5px 5px 0 #0D0D0D',
+    shadowHardLg: '8px 8px 0 #0D0D0D',
+    shadowSm: '3px 3px 0 #0D0D0D',
+    shadowMd: '5px 5px 0 #0D0D0D',
+    shadowLg: '8px 8px 0 #0D0D0D',
   },
 };
 
@@ -85,38 +134,46 @@ export const darkTheme = {
   ...shared,
   name: 'dark',
   colors: {
-    bg: '#0F1216',
-    bgAlt: '#151A20',
-    surface: '#171C23',
-    surfaceSunken: '#11151A',
+    bg: '#0D0D0D',
+    bgAlt: '#1B1B16',
+    surface: '#151515',
+    surfaceSunken: '#080808',
 
-    ink: '#ECEAE5',
-    inkSecondary: '#BDC3CB',
-    inkMuted: '#8A939E',
+    ink: '#F4F1E6', //          17.2:1
+    inkSecondary: '#CFCABA', // 12.4:1
+    inkMuted: '#948E7D', //      6.2:1
 
-    hairline: '#262D36',
-    hairlineStrong: '#3A434E',
+    hairline: '#F4F1E6',
+    hairlineStrong: '#F4F1E6',
 
-    accent: '#9C90FF',
-    accentInk: '#B4AAFF',
-    accentSoft: 'rgba(156, 144, 255, 0.14)',
-    accentBorder: 'rgba(156, 144, 255, 0.38)',
-    onAccent: '#12121A',
+    accent: '#FFE800',
+    accentAlt: '#FF6B3D',
+    accentSoft: '#3D3800',
+    accentBorder: '#F4F1E6',
+    onAccent: '#0D0D0D',
+    onAccentAlt: '#0D0D0D',
 
-    ochre: '#D9A25E',
-    ochreInk: '#E6B579',
-    ochreSoft: 'rgba(217, 162, 94, 0.14)',
+    // On black the yellow is the text-safe one at 15.5:1. The blue is not.
+    accentInk: '#FFE800',
+    onAccentInk: '#0D0D0D',
 
-    success: '#5FD39B',
-    successSoft: 'rgba(95, 211, 155, 0.14)',
-    danger: '#F1897F',
-    dangerSoft: 'rgba(241, 137, 127, 0.14)',
+    ochre: '#FF6B3D',
+    ochreInk: '#948E7D',
+    ochreSoft: '#2B1509',
 
-    dot: 'rgba(236, 234, 229, 0.13)',
-    overlay: 'rgba(0, 0, 0, 0.62)',
-    shadowSm: '0 1px 2px rgba(0, 0, 0, 0.4)',
-    shadowMd: '0 8px 24px -12px rgba(0, 0, 0, 0.6)',
-    shadowLg: '0 20px 48px -20px rgba(0, 0, 0, 0.7)',
+    success: '#57D98A',
+    successSoft: '#0E2E1B',
+    danger: '#FF6B3D', //        6.9:1
+    dangerSoft: '#2B1509',
+
+    dot: '#F4F1E6',
+    overlay: 'rgba(0, 0, 0, 0.85)',
+    shadowHardSm: '3px 3px 0 #F4F1E6',
+    shadowHard: '5px 5px 0 #F4F1E6',
+    shadowHardLg: '8px 8px 0 #F4F1E6',
+    shadowSm: '3px 3px 0 #F4F1E6',
+    shadowMd: '5px 5px 0 #F4F1E6',
+    shadowLg: '8px 8px 0 #F4F1E6',
   },
 };
 

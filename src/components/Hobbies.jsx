@@ -31,11 +31,15 @@ const HobbyCard = styled(motion.div)`
   gap: 0.85rem;
   padding: 1rem 1.15rem;
 
+  /* The whole block fills with the accent rather than lifting away. */
   &:hover {
-    border-color: ${({ theme }) => theme.colors.accentBorder};
+    background: ${({ theme }) => theme.colors.accent};
+    transform: translate(-2px, -2px);
+    box-shadow: ${({ theme }) => theme.colors.shadowHard};
 
-    .icon {
-      color: ${({ theme }) => theme.colors.accent};
+    .icon,
+    h3 {
+      color: ${({ theme }) => theme.colors.onAccent};
     }
   }
 
@@ -43,16 +47,17 @@ const HobbyCard = styled(motion.div)`
     flex-shrink: 0;
     width: 1.1rem;
     font-size: 1.1rem;
-    color: ${({ theme }) => theme.colors.inkMuted};
+    color: ${({ theme }) => theme.colors.inkSecondary};
     transition: color ${({ theme }) => theme.motion.base};
   }
 
   h3 {
     font-family: ${({ theme }) => theme.fonts.mono};
     font-size: 0.8125rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     line-height: 1.3;
+    text-transform: uppercase;
     color: ${({ theme }) => theme.colors.ink};
     margin: 0;
   }

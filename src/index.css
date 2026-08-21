@@ -5,15 +5,15 @@
  */
 :root {
   color-scheme: light dark;
-  background-color: #fdfcfa;
+  background-color: #f4f1e6;
 }
 
 :root[data-theme='dark'] {
-  background-color: #0f1216;
+  background-color: #0d0d0d;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    background-color: #0f1216;
+    background-color: #0d0d0d;
   }
 }

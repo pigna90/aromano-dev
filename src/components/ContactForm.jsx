@@ -25,7 +25,8 @@ const Intro = styled.div`
 
   p {
     font-size: 1.125rem;
-    line-height: 1.7;
+    font-weight: 500;
+    line-height: 1.55;
     color: ${({ theme }) => theme.colors.inkSecondary};
     margin: 0.75rem 0 0;
   }
@@ -46,34 +47,37 @@ const InputGroup = styled.div`
 const Label = styled.label`
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: var(--font-size-meta);
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.inkMuted};
+  color: ${({ theme }) => theme.colors.ink};
 `;
 
 const fieldStyles = ({ theme }) => `
-  padding: 0.8rem 0.9rem;
-  border: 1px solid ${theme.colors.hairlineStrong};
-  border-radius: ${theme.radii.md};
+  padding: 0.85rem 0.9rem;
+  border: ${theme.borders.base} solid ${theme.colors.ink};
   font-size: 1rem;
+  font-weight: 500;
   font-family: ${theme.fonts.body};
   color: ${theme.colors.ink};
   background-color: ${theme.colors.surface};
-  transition: border-color ${theme.motion.fast}, box-shadow ${theme.motion.fast};
+  transition: box-shadow ${theme.motion.fast},
+    background ${theme.motion.fast};
 
+  /* Focus drops the field onto a hard offset block instead of glowing. */
   &:focus {
     outline: none;
-    border-color: ${theme.colors.accent};
-    box-shadow: 0 0 0 3px ${theme.colors.accentSoft};
+    box-shadow: ${theme.colors.shadowHardSm};
   }
 
   &[aria-invalid='true'] {
     border-color: ${theme.colors.danger};
+    background-color: ${theme.colors.dangerSoft};
   }
 
   &::placeholder {
     color: ${theme.colors.inkMuted};
+    font-weight: 400;
   }
 `;
 
@@ -88,16 +92,22 @@ const TextArea = styled.textarea`
 `;
 
 const ErrorMessage = styled.div`
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: ${({ theme }) => theme.colors.danger};
-  font-size: var(--font-size-small);
 `;
 
 const SuccessMessage = styled.div`
-  color: ${({ theme }) => theme.colors.success};
+  color: ${({ theme }) => theme.colors.ink};
   background: ${({ theme }) => theme.colors.successSoft};
-  border: 1px solid ${({ theme }) => theme.colors.success};
-  border-radius: ${({ theme }) => theme.radii.md};
+  border: ${({ theme }) => theme.borders.base} solid
+    ${({ theme }) => theme.colors.ink};
+  box-shadow: ${({ theme }) => theme.colors.shadowHardSm};
   font-size: 0.9375rem;
+  font-weight: 700;
   padding: 0.9rem 1rem;
 `;
 
@@ -176,7 +186,7 @@ const ContactForm = () => {
   };
 
   return (
-    <Section id="contact">
+    <Section id="contact" $sunken>
       <SectionContent>
         <Title>Get in Touch</Title>
         <ContactLayout>
