@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import { conferenceGallery } from '../data/conferenceGallery';
 
-const GalleryContainer = styled.div`
-  margin-bottom: 3rem;
+const GalleryContainer = styled.figure`
+  margin: 0 0 3rem;
   position: relative;
 `;
 
@@ -108,6 +109,21 @@ const Dots = styled.div`
   z-index: 2;
 `;
 
+/*
+ * Names the stage in the current frame. Half the point is that it is real text:
+ * the photographs are the strongest proof on the page that the talks happened,
+ * and without a caption the venues exist nowhere a search engine can read them.
+ */
+const Caption = styled.figcaption`
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: var(--font-size-meta);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.inkMuted};
+  padding-top: 0.85rem;
+`;
+
 const Dot = styled.button`
   width: 16px;
   height: 8px;
@@ -124,21 +140,7 @@ const Dot = styled.button`
 
 const ConferenceGallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [images, setImages] = useState([]);
-
-  // Load every image sitting in public/images/conferences
-  useEffect(() => {
-    try {
-      const imageModules = import.meta.glob(
-        '/public/images/conferences/*.{png,jpg,jpeg,webp}',
-        { eager: true, query: '?url', import: 'default' }
-      );
-      setImages(Object.values(imageModules));
-    } catch (error) {
-      console.error('Error loading conference images:', error);
-      setImages([]);
-    }
-  }, []);
+  const images = conferenceGallery;
 
   const handlePrevious = () =>
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
@@ -170,8 +172,14 @@ const ConferenceGallery = () => {
             transition={{ duration: 0.45 }}
           >
             <img
-              src={images[currentIndex]}
-              alt={`Speaking at a conference (${currentIndex + 1} of ${images.length})`}
+              src={images[currentIndex].src}
+              alt={images[currentIndex].alt}
+              width={images[currentIndex].width}
+              height={images[currentIndex].height}
+              /* The first frame is the one the carousel opens on, so it is the
+                 only slide worth fetching eagerly. */
+              loading={currentIndex === 0 ? 'eager' : 'lazy'}
+              decoding="async"
             />
           </CarouselItem>
         </AnimatePresence>
@@ -195,16 +203,17 @@ const ConferenceGallery = () => {
             <Dots>
               {images.map((image, index) => (
                 <Dot
-                  key={image}
+                  key={image.src}
                   $active={currentIndex === index}
                   onClick={() => setCurrentIndex(index)}
-                  aria-label={`Go to photo ${index + 1}`}
+                  aria-label={`Go to photo ${index + 1}: ${image.caption}`}
                 />
               ))}
             </Dots>
           </>
         )}
       </CarouselContainer>
+      <Caption>{images[currentIndex].caption}</Caption>
     </GalleryContainer>
   );
 };

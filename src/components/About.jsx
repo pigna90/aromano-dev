@@ -62,7 +62,12 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <Image src="/images/profile/ski.jpg" alt="Alessandro Romano" />
+            <Image
+              src="/images/profile/ski.webp"
+              alt="Alessandro Romano skiing, away from the keyboard"
+              width={900}
+              height={738}
+            />
           </Portrait>
           <AboutText
             initial={{ opacity: 0, y: 16 }}

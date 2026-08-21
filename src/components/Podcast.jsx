@@ -74,8 +74,12 @@ const Podcast = () => {
         <PodcastContainer>
           <Cover>
             <img
-              src="/images/brand/logo_transparent.png"
-              alt="My Data Guest podcast cover"
+              src="/images/brand/logo_transparent.webp"
+              alt="My Data Guest podcast cover art, the AI podcast and course platform hosted by Alessandro Romano and Rosaria Silipo"
+              width={900}
+              height={900}
+              loading="lazy"
+              decoding="async"
             />
           </Cover>
           <PodcastContent>

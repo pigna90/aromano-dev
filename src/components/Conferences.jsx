@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -105,7 +105,7 @@ const ConferenceList = styled.div`
  * clickable row fills with the pale accent instead of shifting a shade.
  */
 const ConferenceItem = styled(motion.article)`
-  display: grid;
+  display: ${({ $collapsed }) => ($collapsed ? 'none' : 'grid')};
   grid-template-columns: 8rem minmax(0, 1fr) auto;
   gap: 1.75rem;
   align-items: start;
@@ -202,6 +202,14 @@ const VideoButton = styled.a`
     background: ${({ theme }) => theme.colors.accentAlt};
     color: ${({ theme }) => theme.colors.onAccentAlt};
   }
+`;
+
+/*
+ * `display: none` rather than unmounting, so the inactive tab's talks stay in
+ * the document for crawlers and for anyone reading without JavaScript.
+ */
+const TabPanel = styled.div`
+  display: ${({ $active }) => ($active ? 'block' : 'none')};
 `;
 
 const YearSection = styled.div`
@@ -302,13 +310,14 @@ const Conferences = () => {
   const toggleYear = (year) =>
     setExpandedYears((prev) => ({ ...prev, [year]: !prev[year] }));
 
-  const renderItem = (conf, index, { upcoming = false } = {}) => {
+  const renderItem = (conf, index, { upcoming = false, collapsed = false } = {}) => {
     const clickable = Boolean(conf.info_link);
 
     return (
       <ConferenceItem
         key={`${conf.title}-${conf.date}`}
         $clickable={clickable}
+        $collapsed={collapsed}
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -385,68 +394,59 @@ const Conferences = () => {
           </FilterToggle>
         </Controls>
 
-        <AnimatePresence mode="wait">
-          {activeTab === 'upcoming' ? (
-            <motion.div
-              key="upcoming"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              {upcomingConferences.length > 0 ? (
-                <ConferenceList>
-                  {upcomingConferences.map((conf, index) =>
-                    renderItem(conf, index, { upcoming: true })
-                  )}
-                </ConferenceList>
-              ) : (
-                <EmptyState>
-                  {showVideosOnly
-                    ? 'No upcoming talks with a recording yet'
-                    : 'No upcoming talks announced right now'}
-                </EmptyState>
+        {/*
+          Both panels are always in the markup and the inactive one is hidden in
+          CSS, rather than the active one being the only thing rendered. Thirty
+          seven past talks, with their topics and cities, are the strongest
+          evidence on this page that the speaking is real, and behind a
+          conditional render they reached neither a crawler nor a reader with
+          JavaScript off. Same for the rows past each year's collapse point.
+        */}
+        <TabPanel role="tabpanel" $active={activeTab === 'upcoming'}>
+          {upcomingConferences.length > 0 ? (
+            <ConferenceList>
+              {upcomingConferences.map((conf, index) =>
+                renderItem(conf, index, { upcoming: true })
               )}
-            </motion.div>
+            </ConferenceList>
           ) : (
-            <motion.div
-              key="past"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              {pastByYear.length > 0 ? (
-                pastByYear.map(([year, confs]) => {
-                  const isExpanded = expandedYears[year];
-                  const visible = isExpanded
-                    ? confs
-                    : confs.slice(0, COLLAPSED_PER_YEAR);
-
-                  return (
-                    <YearSection key={year}>
-                      <YearHeader>
-                        <h3>{year}</h3>
-                        {confs.length > COLLAPSED_PER_YEAR && (
-                          <ShowMoreButton onClick={() => toggleYear(year)}>
-                            {isExpanded
-                              ? 'Show less'
-                              : `Show all ${confs.length}`}
-                          </ShowMoreButton>
-                        )}
-                      </YearHeader>
-                      <ConferenceList>
-                        {visible.map((conf, index) => renderItem(conf, index))}
-                      </ConferenceList>
-                    </YearSection>
-                  );
-                })
-              ) : (
-                <EmptyState>No past talks with a recording yet</EmptyState>
-              )}
-            </motion.div>
+            <EmptyState>
+              {showVideosOnly
+                ? 'No upcoming talks with a recording yet'
+                : 'No upcoming talks announced right now'}
+            </EmptyState>
           )}
-        </AnimatePresence>
+        </TabPanel>
+
+        <TabPanel role="tabpanel" $active={activeTab === 'past'}>
+          {pastByYear.length > 0 ? (
+            pastByYear.map(([year, confs]) => {
+              const isExpanded = expandedYears[year];
+
+              return (
+                <YearSection key={year}>
+                  <YearHeader>
+                    <h3>{year}</h3>
+                    {confs.length > COLLAPSED_PER_YEAR && (
+                      <ShowMoreButton onClick={() => toggleYear(year)}>
+                        {isExpanded ? 'Show less' : `Show all ${confs.length}`}
+                      </ShowMoreButton>
+                    )}
+                  </YearHeader>
+                  <ConferenceList>
+                    {confs.map((conf, index) =>
+                      renderItem(conf, index, {
+                        collapsed: !isExpanded && index >= COLLAPSED_PER_YEAR,
+                      })
+                    )}
+                  </ConferenceList>
+                </YearSection>
+              );
+            })
+          ) : (
+            <EmptyState>No past talks with a recording yet</EmptyState>
+          )}
+        </TabPanel>
       </SectionContent>
     </Section>
   );

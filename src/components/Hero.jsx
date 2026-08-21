@@ -437,8 +437,11 @@ const Hero = () => {
                     key={link.name}
                     href={link.url}
                     target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={link.name}
+                    /* `me` marks these as the same person's other profiles,
+                       which is what lets a crawler tie the accounts together
+                       into one entity rather than six unrelated outbound links. */
+                    rel="me noopener noreferrer"
+                    aria-label={`${link.name} profile of Alessandro Romano`}
                     title={link.name}
                   >
                     {link.isMentorIcon ? (
@@ -464,9 +467,24 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.24, ease: [0.2, 0, 0, 1] }}
           >
-            <Image src="/images/profile/headshot.jpg" alt="Alessandro Romano" />
+            <Image
+              src="/images/profile/headshot.webp"
+              alt="Alessandro Romano, senior data scientist, AI engineer and conference speaker"
+              width={750}
+              height={649}
+              loading="eager"
+              fetchPriority="high"
+            />
+            {/* Only ever seen on hover, so it has no business competing with
+                the portrait underneath it for bandwidth on first paint. */}
             <div className="hover-image">
-              <Image src="/images/profile/headshot_hover.png" alt="" />
+              <Image
+                src="/images/profile/headshot_hover.webp"
+                alt=""
+                width={750}
+                height={750}
+                aria-hidden="true"
+              />
             </div>
           </Portrait>
         </Lower>

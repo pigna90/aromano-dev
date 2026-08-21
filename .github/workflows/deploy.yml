@@ -29,6 +29,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # `npm ci` fetches Puppeteer's pinned Chrome build, but the cache is keyed
+      # on the lockfile, so a cache hit skips the postinstall that downloads it.
+      # This makes the browser the prerender step needs present either way.
+      - name: Install Chrome for prerendering
+        run: npx puppeteer browsers install chrome
+
       - name: Build
         run: npm run build
 

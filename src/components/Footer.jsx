@@ -96,8 +96,8 @@ const Footer = () => {
               key={link.name}
               href={link.url}
               target="_blank"
-              rel="noopener noreferrer"
-              aria-label={link.name}
+              rel="me noopener noreferrer"
+              aria-label={`${link.name} profile of Alessandro Romano`}
               title={link.name}
             >
               {link.isMentorIcon ? (
