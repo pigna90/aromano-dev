@@ -132,7 +132,7 @@ export const buildStructuredData = () => ({
       '@type': 'ProfilePage',
       '@id': `${SITE_URL}/#webpage`,
       url: `${SITE_URL}/`,
-      name: 'Alessandro Romano | AI Engineer, Conference Speaker & AI Mentor',
+      name: 'Alessandro Romano | Data Scientist/AI Engineer, Speaker, Mentor',
       isPartOf: { '@id': WEBSITE_ID },
       about: { '@id': PERSON_ID },
       primaryImageOfPage: `${SITE_URL}/og-image-datahack-2026.jpg`,
