@@ -4,11 +4,27 @@
  */
 export const conferences = [
   {
+    title: 'Python Pizza Hamburg',
+    topic: 'TBD',
+    date: 'February 27, 2027',
+    description: 'Co-organizing Python Pizza Hamburg. Talk topic to be announced.',
+    location: 'Hamburg',
+    info_link: 'https://hamburg.python.pizza'
+  },
+  {
     title: 'MDM & Data Governance Summit',
     topic: 'TBD',
     date: 'January 20, 2027',
     description: 'Speaking at the MDM & Data Governance Summit (January 20–21, 2027). Talk topic to be announced.',
     location: 'Amsterdam'
+  },
+  {
+    title: 'bit summit',
+    topic: 'How to Hack Myself',
+    date: 'September 23, 2026',
+    description: 'Speaking at bit summit in Hamburg (September 23–24, 2026).',
+    location: 'Hamburg',
+    info_link: 'https://bit-summit.com/'
   },
    {
     title: 'DATAHACK Summit',
