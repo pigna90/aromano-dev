@@ -101,6 +101,18 @@ const ErrorMessage = styled.div`
   color: ${({ theme }) => theme.colors.danger};
 `;
 
+/*
+ * Honeypot for bots. Hidden from people and assistive tech, so anything
+ * typed into it marks the submission as spam (see workers/contact).
+ */
+const Honeypot = styled.input`
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+`;
+
 const PrivacyNote = styled.p`
   font-size: 0.8125rem;
   font-weight: 500;
@@ -124,7 +136,8 @@ const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
+    website: '',
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -158,7 +171,8 @@ const ContactForm = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch("https://formspree.io/f/mblgapjq", {
+      // Cloudflare Worker on this same domain, see workers/contact/index.js.
+      const response = await fetch('/api/contact', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -168,7 +182,7 @@ const ContactForm = () => {
 
       if (response.ok) {
         setSubmitStatus('success');
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: '', email: '', message: '', website: '' });
       } else {
         throw new Error('Failed to submit form');
       }
@@ -213,6 +227,16 @@ const ContactForm = () => {
           </Intro>
 
           <Form onSubmit={handleSubmit} noValidate>
+            <Honeypot
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={formData.website}
+              onChange={handleChange}
+            />
+
             <InputGroup>
               <Label htmlFor="name">Name</Label>
               <Input
@@ -259,8 +283,8 @@ const ContactForm = () => {
             </Button>
 
             <PrivacyNote>
-              Your name, email and message are sent through Formspree, a US
-              service, so I can reply. More in the{' '}
+              Your name, email and message are emailed to me through
+              Cloudflare so I can reply. Nothing is stored. More in the{' '}
               <a href="/datenschutz/#contact-form">privacy policy</a>.
             </PrivacyNote>
 

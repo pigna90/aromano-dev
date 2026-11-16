@@ -98,35 +98,27 @@ const Privacy = () => (
       .
     </p>
 
-    <h2 id="contact-form">5. Contact form</h2>
+    <h2 id="contact-form">5. Contact form and email</h2>
     <p>
       If you send a message through the contact form, your name, email address
-      and message are transmitted to Formspree, Inc. (USA), which forwards
-      them to me by email. Formspree also receives your IP address and
-      browser information when you submit the form. I use this data only to
-      answer your enquiry and delete it once the conversation is over, unless
-      a legal retention duty applies.
+      and message are passed to a small program I run on Cloudflare (see
+      section 2), which emails them on to my personal mailbox. Nothing is
+      stored on the way. Your IP address is used only briefly, to limit how
+      many messages can be sent per minute and keep spam out.
     </p>
     <p>
-      Legal basis: Art. 6(1)(b) GDPR where your message is about a possible
-      engagement (a talk, workshop or mentoring), otherwise Art. 6(1)(f) GDPR,
-      my legitimate interest in replying to messages sent to me. Because
-      Formspree is based in the USA, your data is transferred to a third
-      country. The transfer is based on the EU standard contractual clauses
-      (Art. 46(2)(c) GDPR). If you prefer, you can email me directly instead.
-      More information:{' '}
-      <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener noreferrer">
-        Formspree Privacy Policy
-      </a>
-      .
+      Emails you send to {operator.email} are handled the same way: they are
+      received by Cloudflare Email Routing and forwarded to my mailbox.
     </p>
-
-    <h3>Contact by email</h3>
     <p>
-      Emails to {operator.email} are received by Cloudflare Email Routing
-      (Cloudflare, Inc., see section 2) and forwarded to my personal mailbox.
-      The same purpose, legal basis and deletion rules apply as for the
-      contact form.
+      I use this data only to answer your enquiry and delete it once the
+      conversation is over, unless a legal retention duty applies. Legal
+      basis: Art. 6(1)(b) GDPR where your message is about a possible
+      engagement (a talk, workshop or mentoring), otherwise Art. 6(1)(f)
+      GDPR, my legitimate interest in replying to messages sent to me.
+      Cloudflare processes this data on my behalf under its data processing
+      addendum (Art. 28 GDPR); transfers to the USA are covered by the EU-US
+      Data Privacy Framework.
     </p>
     <p>
       Giving me your data is neither a legal nor a contractual requirement.
