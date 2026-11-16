@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { socialLinks } from '../data/socialLinks';
+import { openCookieSettings } from '../utils/analytics';
+import { buttonReset } from '../styles/SharedStyles';
 
 /* The page ends on a fully inverted slab. */
 const FooterContainer = styled.footer`
@@ -40,6 +42,35 @@ const Legal = styled.div`
 
   p {
     margin: 0;
+  }
+`;
+
+/*
+ * Impressum and privacy policy have to be reachable from every page, so they
+ * live here rather than in the navbar, which only exists on the home page.
+ */
+const LegalLinks = styled.nav`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin-top: 0.5rem;
+
+  a,
+  button {
+    ${buttonReset}
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: ${({ theme }) => theme.colors.bg};
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.25em;
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.accent};
+      color: ${({ theme }) => theme.colors.onAccent};
+      text-decoration: none;
+    }
   }
 `;
 
@@ -89,6 +120,13 @@ const Footer = () => {
         <Legal>
           <p>© {new Date().getFullYear()} Alessandro Romano</p>
           <p>MIT Licensed</p>
+          <LegalLinks aria-label="Legal">
+            <a href="/impressum/">Impressum</a>
+            <a href="/datenschutz/">Datenschutz / Privacy</a>
+            <button type="button" onClick={openCookieSettings}>
+              Cookie settings
+            </button>
+          </LegalLinks>
         </Legal>
         <SocialLinks>
           {socialLinks.map((link) => (

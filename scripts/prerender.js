@@ -71,40 +71,53 @@ const browser = await puppeteer.launch({
   args: ['--no-sandbox', '--disable-dev-shm-usage'],
 });
 
+/**
+ * Pages to snapshot, and where each lands in dist/. The legal pages matter as
+ * much as the home page here: an Impressum has to be readable even when
+ * JavaScript is off.
+ */
+const ROUTES = [
+  { url: '/', file: 'index.html' },
+  { url: '/impressum/', file: join('impressum', 'index.html') },
+  { url: '/datenschutz/', file: join('datenschutz', 'index.html') },
+];
+
 try {
   const page = await browser.newPage();
   await page.setViewport({ width: 1440, height: 900 });
 
-  // The blog section fetches two RSS feeds through rss2json on mount. Waiting
-  // for the network to settle means the posts are in the snapshot too.
-  await page.goto(`http://localhost:${PORT}/`, {
-    waitUntil: 'networkidle0',
-    timeout: 60_000,
-  });
-
-  // Every section is lazy, so wait until the last one has actually mounted
-  // rather than trusting a fixed delay.
-  await page.waitForFunction(
-    () => !document.body.innerText.includes('Loading') && !!document.querySelector('footer'),
-    { timeout: 30_000 }
-  );
-
-  const html = await page.evaluate(() => {
-    // Framer Motion leaves entry animations mid-flight as inline opacity/transform,
-    // which would freeze the snapshot with invisible content for anyone whose JS
-    // never runs. Strip those two properties and let the stylesheet decide.
-    document.querySelectorAll('[style]').forEach((node) => {
-      node.style.removeProperty('opacity');
-      node.style.removeProperty('transform');
-      if (!node.getAttribute('style')) node.removeAttribute('style');
+  for (const route of ROUTES) {
+    // The blog section fetches two RSS feeds through rss2json on mount. Waiting
+    // for the network to settle means the posts are in the snapshot too.
+    await page.goto(`http://localhost:${PORT}${route.url}`, {
+      waitUntil: 'networkidle0',
+      timeout: 60_000,
     });
-    return `<!DOCTYPE html>\n${document.documentElement.outerHTML}`;
-  });
 
-  await writeFile(join(DIST, 'index.html'), html, 'utf8');
+    // Every section is lazy, so wait until the last one has actually mounted
+    // rather than trusting a fixed delay.
+    await page.waitForFunction(
+      () => !document.body.innerText.includes('Loading') && !!document.querySelector('footer'),
+      { timeout: 30_000 }
+    );
 
-  const text = await page.evaluate(() => document.body.innerText.trim().length);
-  console.log(`prerender: wrote dist/index.html (${(html.length / 1024).toFixed(1)}kB, ${text} chars of text)`);
+    const html = await page.evaluate(() => {
+      // Framer Motion leaves entry animations mid-flight as inline opacity/transform,
+      // which would freeze the snapshot with invisible content for anyone whose JS
+      // never runs. Strip those two properties and let the stylesheet decide.
+      document.querySelectorAll('[style]').forEach((node) => {
+        node.style.removeProperty('opacity');
+        node.style.removeProperty('transform');
+        if (!node.getAttribute('style')) node.removeAttribute('style');
+      });
+      return `<!DOCTYPE html>\n${document.documentElement.outerHTML}`;
+    });
+
+    await writeFile(join(DIST, route.file), html, 'utf8');
+
+    const text = await page.evaluate(() => document.body.innerText.trim().length);
+    console.log(`prerender: wrote dist/${route.file} (${(html.length / 1024).toFixed(1)}kB, ${text} chars of text)`);
+  }
 } finally {
   await browser.close();
   server.close();

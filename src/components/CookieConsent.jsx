@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button, GhostButton } from '../styles/SharedStyles';
+import {
+  getConsent,
+  setConsent,
+  loadAnalytics,
+  disableAnalytics,
+  onOpenCookieSettings,
+} from '../utils/analytics';
 
 const CookieBanner = styled(motion.div)`
   position: fixed;
@@ -58,36 +65,43 @@ const CookieConsent = () => {
   const [showConsent, setShowConsent] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem('cookieConsent');
-    if (!consent) {
-      setShowConsent(true);
-    }
+    const consent = getConsent();
+    if (consent === 'accepted') loadAnalytics();
+    else if (!consent) setShowConsent(true);
+
+    // The footer's "Cookie settings" link brings the banner back so a choice
+    // can be changed or withdrawn at any time.
+    return onOpenCookieSettings(() => setShowConsent(true));
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem('cookieConsent', 'accepted');
+    setConsent('accepted');
+    loadAnalytics();
     setShowConsent(false);
   };
 
   const handleDecline = () => {
-    localStorage.setItem('cookieConsent', 'declined');
+    setConsent('declined');
+    disableAnalytics();
     setShowConsent(false);
-    // Disable Google Analytics
-    window['ga-disable-G-53PTGD76C5'] = true;
   };
 
   return (
     <AnimatePresence>
       {showConsent && (
         <CookieBanner
+          role="dialog"
+          aria-label="Cookie consent"
           initial={{ y: 120, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 120, opacity: 0 }}
           transition={{ duration: 0.18, ease: [0.2, 0, 0, 1] }}
         >
           <CookieText>
-            I use cookies to understand how the site is used. Analytics only.
-            Nothing is sold or shared.
+            With your consent I use Google Analytics to see how the site is
+            used. It sets cookies and sends data to Google, so it stays off
+            unless you accept. Details in the{' '}
+            <a href="/datenschutz/">privacy policy</a>.
           </CookieText>
           <ButtonGroup>
             <GhostButton onClick={handleDecline}>Decline</GhostButton>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { operator } from '../data/legal';
 import {
   Section,
   SectionContent,
@@ -100,6 +101,14 @@ const ErrorMessage = styled.div`
   color: ${({ theme }) => theme.colors.danger};
 `;
 
+const PrivacyNote = styled.p`
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: ${({ theme }) => theme.colors.inkMuted};
+  margin: -0.5rem 0 0;
+`;
+
 const SuccessMessage = styled.div`
   color: ${({ theme }) => theme.colors.ink};
   background: ${({ theme }) => theme.colors.successSoft};
@@ -197,6 +206,10 @@ const ContactForm = () => {
               about pricing and agentic AI? Send a note and I&apos;ll get back to
               you.
             </p>
+            <p>
+              Or email me at{' '}
+              <a href={`mailto:${operator.email}`}>{operator.email}</a>.
+            </p>
           </Intro>
 
           <Form onSubmit={handleSubmit} noValidate>
@@ -244,6 +257,12 @@ const ContactForm = () => {
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Sending…' : 'Send Message'}
             </Button>
+
+            <PrivacyNote>
+              Your name, email and message are sent through Formspree, a US
+              service, so I can reply. More in the{' '}
+              <a href="/datenschutz/#contact-form">privacy policy</a>.
+            </PrivacyNote>
 
             {submitStatus === 'success' && (
               <SuccessMessage>
