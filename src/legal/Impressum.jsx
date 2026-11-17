@@ -36,6 +36,15 @@ const Impressum = () => (
 
     <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
     <p>{operator.name}, Anschrift wie oben.</p>
+
+    <h2>Geltungsbereich</h2>
+    <p>
+      Dieses Impressum gilt auch für den Newsletter unter{' '}
+      <a href="https://alerom90.substack.com/" target="_blank" rel="noopener noreferrer">
+        alerom90.substack.com
+      </a>
+      .
+    </p>
   </>
 );
 
